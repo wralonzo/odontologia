@@ -23,7 +23,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.jwt);
+        localStorage.setItem('token', data.token);
         navigate('/dashboard');
       } else {
         console.error('Error al iniciar sesión');

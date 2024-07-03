@@ -18,9 +18,9 @@ const UserList = () => {
 
   const fetchUsers = (page, limit) => {
     const token = localStorage.getItem('token');
+    console.log('token:', token);
     setLoading(true);
     setError(null);
-
     fetch(`${SERVIDOR}/api/user?page=${page + 1}&limit=${limit}`, {
       headers: { 'x-access-token': token }
     })
