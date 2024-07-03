@@ -44,6 +44,9 @@ export const loginUser = async (req, res, next) => {
     if (!user) {
       return res.status(400).json({ message: 'Invalid email or password.' });
     }
+    if (!user.status) {
+      return res.status(400).json({ message: 'User account is inactive.' });
+    }
     const passwordIsValid = await bcryptjs.compare(password, user.password);
     if (!passwordIsValid) {
       return res.status(400).json({ message: 'Invalid email or password.' });

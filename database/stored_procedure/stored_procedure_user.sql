@@ -32,15 +32,18 @@ CREATE PROCEDURE procedure_login_user(
 BEGIN
     DECLARE v_user_id INT;
     DECLARE v_type_of_user VARCHAR(50);
+    DECLARE v_status BOOLEAN;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error logging in user.';
     END;
-    SELECT id, type_of_user INTO v_user_id, v_type_of_user
+    SELECT id, type_of_user, status INTO v_user_id, v_type_of_user, v_status
     FROM user
     WHERE email = p_email AND password = p_password_hash;
     IF v_user_id IS NULL THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid email or password.';
+    ELSEIF v_status = FALSE THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'User account is inactive.';
     END IF;
     SELECT v_user_id AS user_id, v_type_of_user AS type_of_user;    
 END //
