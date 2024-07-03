@@ -11,7 +11,7 @@ router.post('/user', registerUser);
 router.post('/user/login', loginUser);
 
 // ENDPOINT - UPDATE USER
-router.put('/user', verifyToken, updateUser);
+router.put('/user/:id', verifyToken, updateUser);
 
 // ENDPOIN - DELETE LOGICALLY
 router.patch('/user', verifyToken, deleteLogicallyUser);

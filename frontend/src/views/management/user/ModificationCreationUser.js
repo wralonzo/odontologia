@@ -9,6 +9,7 @@ const ModificationCreationUser = () => {
   const navigate = useNavigate();
   const userData = state?.user || {};
   const isEditing = !!userData.id;
+  const [userId] = useState(isEditing ? userData.id : '');
   const [name, setName] = useState(isEditing ? userData.name : '');
   const [lastName, setLastName] = useState(isEditing ? userData.last_name : '');
   const [phone, setPhone] = useState(isEditing ? userData.phone : '');
@@ -19,6 +20,7 @@ const ModificationCreationUser = () => {
 
   const handleSubmit = async () => {
     const userDataToUpdate = {
+      id: userId,
       name,
       last_name: lastName,
       phone,
@@ -28,7 +30,7 @@ const ModificationCreationUser = () => {
       type_of_user: typeOfUser
     };
     if (isEditing) {
-      return handleUpdate(userData.id, userDataToUpdate);
+      return handleUpdate(parseInt(userData.id), userDataToUpdate);
     } else {
       return handleCreate(userDataToUpdate);
     }
@@ -43,8 +45,8 @@ const ModificationCreationUser = () => {
         },
         body: JSON.stringify(userData),
       });
-
       if (response.ok) {
+        alert('Usuario creado con exito.');
         navigate('/users');
       } else {
         alert('Error al crear el usuario.');
@@ -56,16 +58,18 @@ const ModificationCreationUser = () => {
 
   const handleUpdate = async (userId, userData) => {
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`${SERVIDOR}/api/user/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'x-access-token': token
         },
         body: JSON.stringify(userData),
       });
-
       if (response.ok) {
-        navigate('/ui/users');
+        alert('Usuario actualizado con exito.')
+        navigate('/users');
       } else {
         alert('Error al actualizar el usuario.');
       }
