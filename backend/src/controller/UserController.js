@@ -5,10 +5,10 @@ import User from '../model/User.js'
 
 const sequelize = User.sequelize;
 
-export const registerUserAdministrator = async (req, res, next) => {
+export const registerUser = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
-    const { name, last_name, phone, address, email, password } = req.body;
+    const { name, last_name, phone, address, email, password, type_of_user } = req.body;
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
     const existingEmail = await User.findOne({ where: { email } });
@@ -16,40 +16,8 @@ export const registerUserAdministrator = async (req, res, next) => {
       await transaction.rollback();
       return res.status(400).json({ message: 'The email is already registered in the system.' });
     } else {
-      await sequelize.query('CALL procedure_to_register_user_with_administrator_role(:name, :last_name, :phone, :address, :email, :password)', {
-        replacements: { name: name, last_name: last_name, phone: phone, address: address, email: email, password: hashedPassword },
-        transaction: transaction
-      });
-    }
-    const userCreated = await User.findOne({ where: { email }, transaction });
-    const token = jwt.sign({
-      id: userCreated.id,
-      email: userCreated.email,
-      type_of_user: userCreated.type_of_user
-    }, secret, { expiresIn: 60 * 30 }
-    );
-    await transaction.commit();
-    res.json({ auth: true, token: token });
-  } catch (error) {
-    await transaction.rollback();
-    console.error('Error registering user as administrator.', error);
-    res.status(500).send('Internal Server Error.');
-  }
-};
-
-export const registerUserSecretary = async (req, res, next) => {
-  const transaction = await sequelize.transaction();
-  try {
-    const { name, last_name, phone, address, email, password } = req.body;
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(password, salt);
-    const existingEmail = await User.findOne({ where: { email } });
-    if (existingEmail) {
-      await transaction.rollback();
-      return res.status(400).json({ message: 'The email is already registered in the system.' });
-    } else {
-      await sequelize.query('CALL procedure_to_register_user_with_secretary_role(:name, :last_name, :phone, :address, :email, :password)', {
-        replacements: { name: name, last_name: last_name, phone: phone, address: address, email: email, password: hashedPassword },
+      await sequelize.query('CALL procedure_to_register_user(:name, :last_name, :phone, :address, :email, :password, :type_of_user)', {
+        replacements: { name: name, last_name: last_name, phone: phone, address: address, email: email, password: hashedPassword, type_of_user: type_of_user },
         transaction: transaction
       });
     }
@@ -91,6 +59,20 @@ export const loginUser = async (req, res, next) => {
     res.json({ auth: true, token: token });
   } catch (error) {
     console.error('Error logging in user.', error);
+    res.status(500).send('Internal Server Error.');
+  }
+};
+
+export const userList = async (req, res, next) => {
+  try {
+    const results = await sequelize.query('CALL procedure_to_user_list()');
+    if (!results || (Array.isArray(results) && results.length === 0) || (!Array.isArray(results) && !results.length)) {
+      return res.status(404).json({ message: 'No users found.' });
+    }
+    const formattedResults = Array.isArray(results) ? results : [results];
+    res.status(200).json(formattedResults);
+  } catch (error) {
+    console.error('Error when displaying the list of users', error);
     res.status(500).send('Internal Server Error.');
   }
 };

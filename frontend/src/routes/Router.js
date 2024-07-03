@@ -3,14 +3,19 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import ProtectedRoute from './ProtectedRoute';
 
-/* ***Layouts**** */
+/* ****Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')));
+/* ****** */
 
-/* ****Pages***** */
+/* ****Pages**** */
 const Dashboard = Loadable(lazy(() => import('../views/dashboard/Dashboard')))
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Login = Loadable(lazy(() => import('../views/authentication/Login')));
+/* ****** */
+
+/* ****Pages**** */
+/* ****** */
 
 const Router = [
   {
