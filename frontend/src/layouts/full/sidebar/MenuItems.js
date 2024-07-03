@@ -1,5 +1,18 @@
 import { IconLayoutDashboard, IconUser } from '@tabler/icons';
 import { uniqueId } from 'lodash';
+import jwtUtils from '../../../api/jwtUtils';
+
+const getUserType = () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    const decoded = jwtUtils(token);
+    console.log('decoded:', decoded);
+    console.log('decoded:', decoded.type_of_user);
+    return decoded?.type_of_user || '';
+  }
+};
+
+const userType = getUserType();
 
 const Menuitems = [
   {
@@ -16,12 +29,16 @@ const Menuitems = [
     navlabel: true,
     subheader: 'Usuarios y Pacientes'
   },
-  {
-    id: uniqueId(),
-    title: 'Usuarios',
-    icon: IconUser,
-    href: '/users'
-  },
+  ...(userType === 'SECRETARY'
+    ? [
+      {
+        id: uniqueId(),
+        title: 'Usuarios',
+        icon: IconUser,
+        href: '/users'
+      }
+    ]
+    : []),
   {
     id: uniqueId(),
     title: 'Pacientes',
