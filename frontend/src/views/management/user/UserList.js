@@ -85,8 +85,8 @@ const UserList = () => {
 
   return (
     <>
-      <Button variant="contained" color="secondary" size="large" onClick={() => navigate('/ui/agregar-usuario')}>
-        Agregar Usuario
+      <Button variant="contained" color="secondary" size="large" onClick={() => navigate('/ui/create-user')}>
+        Crear usuario
       </Button>
       <Table>
         <TableHead>
@@ -118,7 +118,7 @@ const UserList = () => {
                   color="primary"
                   size="small"
                   onClick={() =>
-                    navigate(`/ui/editar-usuario/${user.id}`, { state: { user: user } })
+                    navigate(`/ui/update-user/${user.id}`, { state: { user: user } })
                   }
                 >
                   Editar

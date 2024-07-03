@@ -35,6 +35,16 @@ const Router = [
         exact: true,
         element: (<ProtectedRoute> <UserList /> </ProtectedRoute>)
       },
+      {
+        path: '/ui/create-user',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationUser /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/update-user/:id',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationUser /> </ProtectedRoute>)
+      },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
