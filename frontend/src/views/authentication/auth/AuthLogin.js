@@ -26,7 +26,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
         localStorage.setItem('token', data.token);
         navigate('/dashboard');
       } else {
-        console.error('Error al iniciar sesión');
+        alert('No puedes Iniciar Sesión');
       }
     } catch (error) {
       console.error('Error de red:', error);
