@@ -5,8 +5,7 @@ import { IconListCheck, IconMail, IconUser } from '@tabler/icons';
 import ProfileImg from '../../../assets/images/profile/user-1.jpg';
 
 const Profile = () => {
-  const [anchorEl2, setAnchorEl2] = useState(null);
-  const navigate = useNavigate();
+  const [anchorEl2, setAnchorEl2] = useState(null)
 
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
@@ -18,7 +17,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/auth/login');
+    window.location.href = '/auth/login';
   }
 
   return (

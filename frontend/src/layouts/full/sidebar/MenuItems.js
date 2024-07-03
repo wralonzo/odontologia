@@ -6,10 +6,9 @@ const getUserType = () => {
   const token = localStorage.getItem('token');
   if (token) {
     const decoded = jwtUtils(token);
-    console.log('decoded:', decoded);
-    console.log('decoded:', decoded.type_of_user);
     return decoded?.type_of_user || '';
   }
+  return '';
 };
 
 const userType = getUserType();
@@ -29,7 +28,7 @@ const Menuitems = [
     navlabel: true,
     subheader: 'Usuarios y Pacientes'
   },
-  ...(userType === 'SECRETARY'
+  ...(userType === 'ADMINISTRATOR'
     ? [
       {
         id: uniqueId(),
