@@ -44,18 +44,3 @@ BEGIN
     END IF;
     SELECT v_user_id AS user_id, v_type_of_user AS type_of_user;    
 END //
-
-# Procedure to user list 
-DELIMITER // 
-CREATE PROCEDURE procedure_to_user_list()
-BEGIN 
-	DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-		ROLLBACK;
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error registering user as administrator.';
-	END;
-    START TRANSACTION; 
-		SELECT id, name, last_name, phone, address, email, password, type_of_user
-        FROM user;
-	COMMIT;
-END //

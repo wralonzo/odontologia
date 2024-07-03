@@ -14,7 +14,9 @@ const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Login = Loadable(lazy(() => import('../views/authentication/Login')));
 /* ****** */
 
-/* ****Pages**** */
+/* ****Usuarios y Pacientes**** */
+const UserList = Loadable(lazy(() => import('../views/management/user/UserList')));
+const ModificationCreationUser = Loadable((() => import('../views/management/user/ModificationCreationUser')));
 /* ****** */
 
 const Router = [
@@ -26,11 +28,12 @@ const Router = [
       {
         path: '/dashboard',
         exact: true,
-        element: (
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        )
+        element: (<ProtectedRoute> <Dashboard /> </ProtectedRoute>)
+      },
+      {
+        path: '/users',
+        exact: true,
+        element: (<ProtectedRoute> <UserList /> </ProtectedRoute>)
       },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],

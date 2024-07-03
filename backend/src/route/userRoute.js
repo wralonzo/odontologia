@@ -1,5 +1,6 @@
-import express from 'express'
-import { registerUser, loginUser, userList } from '../controller/UserController.js'
+import express from 'express';
+import verifyToken from '../middleware/verifyToken.js';
+import { registerUser, loginUser, userList } from '../controller/UserController.js';
 
 const router = express.Router();
 
@@ -10,6 +11,6 @@ router.post('/user', registerUser);
 router.post('/user/login', loginUser);
 
 // ENDPOINT - USER LIST
-router.get('/user', userList);
+router.get('/user', verifyToken, userList);
 
 export default router; 

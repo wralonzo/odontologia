@@ -2,9 +2,9 @@ import { useLocation, useNavigate } from 'react-router';
 import React, { useState } from 'react';
 import { Box, Button, Stack, Typography } from '@mui/material';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
-import { SERVIDOR } from 'src/api/Servidor';
+import { SERVIDOR } from '../../../api/Servidor';
 
-const AgregarMaterialProducto = () => {
+const ModificationCreationUser = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const materialData = state?.material || {};
@@ -97,4 +97,4 @@ const AgregarMaterialProducto = () => {
   );
 };
 
-export default AgregarMaterialProducto;
+export default ModificationCreationUser;
