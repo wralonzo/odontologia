@@ -50,18 +50,19 @@ const UserList = () => {
     setPage(0);
   };
 
-  const handleEliminar = (id) => {
+  const handleDeleteLogicallyUser = (id) => {
     const token = localStorage.getItem('token');
-
     if (window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-      fetch(`${SERVIDOR}/api/user/${id}`, {
-        method: 'DELETE',
+      fetch(`${SERVIDOR}/api/user`, {
+        method: 'PATCH',
         headers: {
+          'Content-Type': 'application/json',
           'x-access-token': token
-        }
+        },
+        body: JSON.stringify({ id })
       })
         .then((response) => {
-          if (response.status === 204) {
+          if (response.ok) {
             alert('Usuario eliminado correctamente');
             setUsers(users.filter((user) => user.id !== id));
           } else {
@@ -128,7 +129,7 @@ const UserList = () => {
                   variant="contained"
                   color="secondary"
                   size="small"
-                  onClick={() => handleEliminar(user.id)}
+                  onClick={() => handleDeleteLogicallyUser(user.id)}
                 >
                   Eliminar
                 </Button>

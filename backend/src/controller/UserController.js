@@ -63,6 +63,32 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
+export const deleteLogicallyUser = async (req, res, next) => {
+  const transaction = await sequelize.transaction();
+  try {
+    const { id } = req.body;
+    const existingUser = await User.findByPk(id);
+    if (!existingUser) {
+      await transaction.rollback();
+      return res.status(404).json({ message: 'User does not exist.' });
+    }
+    if (!existingUser.status) {
+      await transaction.rollback();
+      return res.status(400).json({ message: 'User has already been logically deleted.' });
+    }
+    await sequelize.query('CALL procedure_to_delete_logically_user(:id)', {
+      replacements: { id: id },
+      transaction: transaction
+    });
+    await transaction.commit();
+    res.status(200).json({ message: 'User logically deleted successfully.' });
+  } catch (error) {
+    await transaction.rollback();
+    console.error('Error deleting user logically.', error);
+    res.status(500).send('Internal Server Error.');
+  }
+};
+
 export const userList = async (req, res, next) => {
   try {
     const { page = 1, limit = 10 } = req.query;

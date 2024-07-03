@@ -44,3 +44,39 @@ BEGIN
     END IF;
     SELECT v_user_id AS user_id, v_type_of_user AS type_of_user;    
 END //
+
+# Procedure to Delete logically user
+DELIMITER //
+CREATE PROCEDURE procedure_to_delete_logically_user(
+    IN p_id INT
+)
+BEGIN
+    DECLARE user_exists INT;
+    DECLARE user_status BOOLEAN;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error processing user logical deletion.';
+    END;
+    SELECT COUNT(*)
+    INTO user_exists
+    FROM user
+    WHERE id = p_id;
+    IF user_exists = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'User does not exist.';
+    ELSE
+        SELECT status
+        INTO user_status
+        FROM user
+        WHERE id = p_id;
+        IF user_status = 0 THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'User has already been logically deleted.';
+        ELSE
+            START TRANSACTION;
+                UPDATE user
+                SET status = false
+                WHERE id = p_id;
+            COMMIT;
+        END IF;
+    END IF;
+END //
