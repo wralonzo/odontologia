@@ -16,7 +16,7 @@ const Login = Loadable(lazy(() => import('../views/authentication/Login')));
 
 /* ****Usuarios y Pacientes**** */
 const UserList = Loadable(lazy(() => import('../views/management/user/UserList')));
-const ModificationCreationUser = Loadable((() => import('../views/management/user/ModificationCreationUser')));
+const ModificationCreationUser = Loadable(lazy(() => import('../views/management/user/ModificationCreationUser')));
 /* ****** */
 
 const Router = [
