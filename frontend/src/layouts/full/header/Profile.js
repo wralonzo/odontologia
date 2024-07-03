@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Avatar, Box, Menu, Button, IconButton, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 import { IconListCheck, IconMail, IconUser } from '@tabler/icons';
 import ProfileImg from '../../../assets/images/profile/user-1.jpg';
