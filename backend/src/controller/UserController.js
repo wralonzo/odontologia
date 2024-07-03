@@ -66,6 +66,37 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
+export const updateUser = async (req, res, next) => {
+  const transaction = await sequelize.transaction();
+  try {
+    const { id, name, last_name, phone, address, email, password, type_of_user } = req.body;
+    const existingUser = await User.findByPk(id, { transaction });
+    if (!existingUser) {
+      await transaction.rollback();
+      return res.status(400).json({ message: 'User does not exist.' });
+    }
+    if (existingUser.status === false) {
+      await transaction.rollback();
+      return res.status(400).json({ message: 'User exists but is logically deleted.' });
+    }
+    let hashedPassword = existingUser.password;
+    if (password) {
+      const salt = await bcryptjs.genSalt(10);
+      hashedPassword = await bcryptjs.hash(password, salt);
+    }
+    await sequelize.query('CALL procedure_to_update_user(:id, :name, :last_name, :phone, :address, :email, :password, :type_of_user)', {
+      replacements: { id, name, last_name, phone, address, email, password: hashedPassword, type_of_user },
+      transaction: transaction
+    });
+    await transaction.commit();
+    res.json({ message: 'User updated successfully.' });
+  } catch (error) {
+    await transaction.rollback();
+    console.error('Error updating user.', error);
+    res.status(500).send('Internal Server Error.');
+  }
+};
+
 export const deleteLogicallyUser = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
