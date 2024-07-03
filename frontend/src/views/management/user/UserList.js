@@ -50,6 +50,10 @@ const UserList = () => {
     setPage(0);
   };
 
+  const crateUser = () => {
+    navigate('/ui/create-user');
+  };
+
   const handleDeleteLogicallyUser = (id) => {
     const token = localStorage.getItem('token');
     if (window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
@@ -85,7 +89,7 @@ const UserList = () => {
 
   return (
     <>
-      <Button variant="contained" color="secondary" size="large" onClick={() => navigate('/ui/create-user')}>
+      <Button variant="contained" color="secondary" size="large" onClick={crateUser}>
         Crear usuario
       </Button>
       <Table>

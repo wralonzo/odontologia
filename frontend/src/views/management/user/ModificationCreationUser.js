@@ -1,66 +1,75 @@
 import { useLocation, useNavigate } from 'react-router';
 import React, { useState } from 'react';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import { SERVIDOR } from '../../../api/Servidor';
 
 const ModificationCreationUser = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const materialData = state?.material || {};
-  const isEditing = !!materialData.id;
-  const [material, setMaterial] = useState(isEditing ? materialData.material : '');
+  const userData = state?.user || {};
+  const isEditing = !!userData.id;
+  const [name, setName] = useState(isEditing ? userData.name : '');
+  const [lastName, setLastName] = useState(isEditing ? userData.last_name : '');
+  const [phone, setPhone] = useState(isEditing ? userData.phone : '');
+  const [address, setAddress] = useState(isEditing ? userData.address : '');
+  const [email, setEmail] = useState(isEditing ? userData.email : '');
+  const [typeOfUser] = useState(isEditing ? userData.type_of_user : '');
 
   const handleSubmit = async () => {
+    const userDataToUpdate = {
+      name,
+      last_name: lastName,
+      phone,
+      address,
+      email,
+      type_of_user: typeOfUser
+    };
+
     if (isEditing) {
-      return handleActualizar(materialData.id);
+      return handleUpdate(userData.id, userDataToUpdate);
     } else {
-      return handleCrear();
+      return handleCreate(userDataToUpdate);
     }
   };
 
-  const handleCrear = async () => {
+  const handleCreate = async (userData) => {
     try {
-      const response = await fetch(`${SERVIDOR}/api/MaterialProducto`, {
+      const response = await fetch(`${SERVIDOR}/api/user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          material,
-        }),
+        body: JSON.stringify(userData),
       });
 
       if (response.ok) {
-        navigate('/ui/material-productos');
+        navigate('/ui/users');
       } else {
-        alert('Error al registrar el material.');
+        alert('Error al crear el usuario.');
       }
     } catch (error) {
-      alert('No se puede registrar el material en este momento. Por favor, inténtalo de nuevo más tarde.');
+      alert('No se puede crear el usuario en este momento. Por favor, inténtalo de nuevo más tarde.');
     }
   };
 
-  const handleActualizar = async (materialId) => {
+  const handleUpdate = async (userId, userData) => {
     try {
-      const response = await fetch(`${SERVIDOR}/api/MaterialProducto/${materialId}`, {
+      const response = await fetch(`${SERVIDOR}/api/user/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          id: parseInt(materialId),
-          material,
-        }),
+        body: JSON.stringify(userData),
       });
 
-      if (response.status === 200) {
-        navigate('/ui/material-productos');
+      if (response.ok) {
+        navigate('/ui/users');
       } else {
-        alert('Error al actualizar el material.');
+        alert('Error al actualizar el usuario.');
       }
     } catch (error) {
-      alert('No se puede actualizar el material en este momento. Por favor, inténtalo de nuevo más tarde.');
+      alert('No se puede actualizar el usuario en este momento. Por favor, inténtalo de nuevo más tarde.');
     }
   };
 
@@ -73,18 +82,104 @@ const ModificationCreationUser = () => {
               variant="subtitle1"
               fontWeight={600}
               component="label"
-              htmlFor="material"
+              htmlFor="name"
               mb="5px"
             >
-              Material
+              Nombre
             </Typography>
             <CustomTextField
-              id="material"
+              id="name"
               variant="outlined"
               fullWidth
-              value={material}
-              onChange={(e) => setMaterial(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
+          </Box>
+          <Box>
+            <Typography
+              variant="subtitle1"
+              fontWeight={600}
+              component="label"
+              htmlFor="lastName"
+              mb="5px"
+            >
+              Apellido
+            </Typography>
+            <CustomTextField
+              id="lastName"
+              variant="outlined"
+              fullWidth
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <Typography
+              variant="subtitle1"
+              fontWeight={600}
+              component="label"
+              htmlFor="phone"
+              mb="5px"
+            >
+              Teléfono
+            </Typography>
+            <CustomTextField
+              id="phone"
+              variant="outlined"
+              fullWidth
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <Typography
+              variant="subtitle1"
+              fontWeight={600}
+              component="label"
+              htmlFor="address"
+              mb="5px"
+            >
+              Dirección
+            </Typography>
+            <CustomTextField
+              id="address"
+              variant="outlined"
+              fullWidth
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <Typography
+              variant="subtitle1"
+              fontWeight={600}
+              component="label"
+              htmlFor="email"
+              mb="5px"
+            >
+              Email
+            </Typography>
+            <CustomTextField
+              id="email"
+              variant="outlined"
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel id="type_of_user_label">Tipo de Usuario</InputLabel>
+              <Select
+                labelId="type_of_user_label"
+                id="type_of_user"
+                label="Tipo de Usuario"
+                name="type_of_user"
+              >
+                <MenuItem value="SECRETARY">Secretaria</MenuItem>
+                <MenuItem value="ADMINISTRATOR">Administrador</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
           <Box>
             <Button color="primary" variant="contained" size="large" fullWidth onClick={handleSubmit}>
