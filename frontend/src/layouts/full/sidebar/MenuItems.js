@@ -1,4 +1,4 @@
-import { IconLayoutDashboard, IconUser } from '@tabler/icons';
+import { IconCalendar, IconLayoutDashboard, IconUser } from '@tabler/icons';
 import { uniqueId } from 'lodash';
 import jwtUtils from '../../../api/jwtUtils';
 
@@ -43,6 +43,22 @@ const Menuitems = [
     title: 'Pacientes',
     icon: IconUser,
     href: '/patients'
+  },
+  {
+    navlabel: true,
+    subheader: 'Agenda y Citas'
+  },
+  {
+    id: uniqueId(),
+    title: 'Citas',
+    icon: IconCalendar,
+    href: '/quotes'
+  },
+  {
+    id: uniqueId(),
+    title: 'Agenda',
+    icon: IconCalendar,
+    href: '/diary'
   }
 ];
 
