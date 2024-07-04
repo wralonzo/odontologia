@@ -4,7 +4,7 @@ import logger from 'morgan';
 
 // Import routes
 import userRoute from '../route/userRoute.js'
-import patientRecordRoute from '../route/patientRecordRoute.js'
+import patientRoute from '../route/patientRoute.js'
 
 const app = express();
 
@@ -15,6 +15,6 @@ app.use(logger('dev'));
 
 // Use routes
 app.use('/api', userRoute);
-app.use('/api', patientRecordRoute);
+app.use('/api', patientRoute);
 
 export default app; 
