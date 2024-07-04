@@ -21,6 +21,12 @@ const PatientList = Loadable(lazy(() => import('../views/management/patient/Pati
 const ModificationCreationPatient = Loadable(lazy(() => import('../views/management/patient/ModificationCreationPatient')));
 /* ****** */
 
+/* ****Citas y Agenda**** */
+const AppointmentList = Loadable(lazy(() => import('../views/management/appointment/AppointmentList')));
+const ModificationCreationAppointment = Loadable(lazy(() => import('../views/management/appointment/ModificationCreationAppointment')));
+const ScheduleList = Loadable(lazy(() => import('../views/management/schedule/ScheduleList')));
+/* ****** */
+
 const Router = [
   {
     path: '/',
@@ -61,6 +67,26 @@ const Router = [
         path: '/ui/update-patient/:id',
         exact: true,
         element: (<ProtectedRoute> <ModificationCreationPatient /> </ProtectedRoute>)
+      },
+      {
+        path: '/appointments',
+        exact: true,
+        element: (<ProtectedRoute> <AppointmentList /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/create-appointment',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationAppointment /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/update-appointment/:id',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationAppointment /> </ProtectedRoute>)
+      },
+      {
+        path: '/schedules',
+        exact: true,
+        element: (<ProtectedRoute> <ScheduleList /> </ProtectedRoute>)
       },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
