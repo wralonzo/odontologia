@@ -4,7 +4,16 @@ import { registerPatient } from '../controller/PatientController.js';
 
 const router = express.Router();
 
-// ENDPOINT - REGISTER PATIENT RECORD
+// ENDPOINT - REGISTER PATIENT
 router.post('/patient', verifyToken, registerPatient);
 
-export default router; 
+// ENDPOINT - UPDATE PATIENT
+router.put('/patient/:id', verifyToken, updateUser);
+
+// ENDPOIN - DELETE LOGICALLY PATIENT
+router.patch('/patient', verifyToken, deleteLogicallyUser);
+
+// ENDPOINT - PATIENT LIST
+router.get('/patient', verifyToken, userList);
+
+export default router;
