@@ -1,6 +1,6 @@
 import Patient from '../model/Patient.js';
 
-import sequelize from '../database/database.js';
+const sequelize = Patient.sequelize;
 
 export const registerPatientRecord = async (req, res, next) => {
   const transaction = await sequelize.transaction();
