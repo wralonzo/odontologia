@@ -20,7 +20,7 @@ const PatientList = () => {
     const token = localStorage.getItem('token');
     setLoading(true);
     setError(null);
-    fetch(`${SERVIDOR}/api/user?page=${page + 1}&limit=${limit}`, {
+    fetch(`${SERVIDOR}/api/patient?page=${page + 1}&limit=${limit}`, {
       headers: { 'x-access-token': token }
     })
       .then((response) => {
