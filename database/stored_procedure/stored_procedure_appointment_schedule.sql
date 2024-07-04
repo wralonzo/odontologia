@@ -3,10 +3,10 @@ USE dentistry_system_database;
 # Procedure to register appointment and schedule
 DELIMITER //
 CREATE PROCEDURE procedure_to_register_appointment_schedule(
-    IN p_patient_id INT,
     IN p_appointment_datetime DATETIME,
     IN p_reason VARCHAR(255),
-    IN p_notes TEXT
+    IN p_notes TEXT,
+    IN p_patient_id INT
 )
 BEGIN 
     DECLARE v_appointment_id INT;
