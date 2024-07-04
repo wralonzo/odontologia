@@ -42,15 +42,16 @@ const ModificationCreationAppointment = () => {
 
   const handleSubmit = async () => {
     const appointmentDataToUpdate = {
-      id: appointmentId,
       appointment_datetime: appointmentDatetime,
       reason,
       notes,
-      status,
       patient_id: patientId
     };
+
     if (isEditing) {
-      return handleUpdate(parseInt(appointmentData.id), appointmentDataToUpdate);
+      appointmentDataToUpdate.status = status;
+      appointmentDataToUpdate.id = appointmentId;
+      return handleUpdate(appointmentId, appointmentDataToUpdate);
     } else {
       return handleCreate(appointmentDataToUpdate);
     }
@@ -90,7 +91,7 @@ const ModificationCreationAppointment = () => {
         body: JSON.stringify(appointmentData),
       });
       if (response.ok) {
-        alert('Cita actualizada con éxito.')
+        alert('Cita actualizada con éxito.');
         navigate('/appointments');
       } else {
         alert('Error al actualizar la cita.');
