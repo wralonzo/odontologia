@@ -1,80 +1,77 @@
 import { useLocation, useNavigate } from 'react-router';
 import React, { useState } from 'react';
-import { Box, Button, Paper, Stack, Typography } from '@mui/material';
+import { Box, Button, Paper, Stack, Typography, Select, MenuItem } from '@mui/material';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import { SERVIDOR } from '../../../api/Servidor';
 
 const ModificationCreationAppointment = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const patientData = state?.patient || {};
-  const isEditing = !!patientData.id;
-  const [patientId] = useState(isEditing ? patientData.id : '');
-  const [fullName, setFullName] = useState(isEditing ? patientData.full_name : '');
-  const [address, setAddress] = useState(isEditing ? patientData.address : '');
-  const [sex, setSex] = useState(isEditing ? patientData.sex : '');
-  const [birthDate, setBirthDate] = useState(isEditing ? patientData.birth_date : '');
-  const [emergencyContact, setEmergencyContact] = useState(isEditing ? patientData.emergency_contact : '');
-  const [emergencyPhone, setEmergencyPhone] = useState(isEditing ? patientData.emergency_phone : '');
+  const appointmentData = state?.appointment || {};
+  const isEditing = !!appointmentData.id;
+  const [appointmentId] = useState(isEditing ? appointmentData.id : '');
+  const [appointmentDatetime, setAppointmentDatetime] = useState(isEditing ? appointmentData.appointment_datetime : '');
+  const [reason, setReason] = useState(isEditing ? appointmentData.reason : '');
+  const [notes, setNotes] = useState(isEditing ? appointmentData.notes : '');
+  const [status, setStatus] = useState(isEditing ? appointmentData.status : ''); // Nuevo estado para el campo status
 
   const handleSubmit = async () => {
-    const patientDataToUpdate = {
-      id: patientId,
-      full_name: fullName,
-      address,
-      sex,
-      birth_date: birthDate,
-      emergency_contact: emergencyContact,
-      emergency_phone: emergencyPhone
+    const appointmentDataToUpdate = {
+      id: appointmentId,
+      appointment_datetime: appointmentDatetime,
+      reason,
+      notes,
+      status // Añadimos el campo status al objeto que se enviará
     };
+
     if (isEditing) {
-      return handleUpdate(parseInt(patientData.id), patientDataToUpdate);
+      return handleUpdate(parseInt(appointmentData.id), appointmentDataToUpdate);
     } else {
-      return handleCreate(patientDataToUpdate);
+      return handleCreate(appointmentDataToUpdate);
     }
   };
 
-  const handleCreate = async (patientData) => {
+  const handleCreate = async (appointmentData) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${SERVIDOR}/api/patient`, {
+      const response = await fetch(`${SERVIDOR}/api/appointment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'x-access-token': token
         },
-        body: JSON.stringify(patientData),
+        body: JSON.stringify(appointmentData),
       });
       if (response.ok) {
-        alert('Paciente creado con éxito.');
-        navigate('/patients');
+        alert('Cita creada con éxito.');
+        navigate('/appointments');
       } else {
-        alert('Error al crear el paciente.');
+        alert('Error al crear la cita.');
       }
     } catch (error) {
-      alert('No se puede crear el paciente en este momento. Por favor, inténtalo de nuevo más tarde.');
+      alert('No se puede crear la cita en este momento. Por favor, inténtalo de nuevo más tarde.');
     }
   };
 
-  const handleUpdate = async (patientId, patientData) => {
+  const handleUpdate = async (appointmentId, appointmentData) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${SERVIDOR}/api/patient/${patientId}`, {
+      const response = await fetch(`${SERVIDOR}/api/appointment/${appointmentId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'x-access-token': token
         },
-        body: JSON.stringify(patientData),
+        body: JSON.stringify(appointmentData),
       });
       if (response.ok) {
-        alert('Paciente actualizado con éxito.')
-        navigate('/patients');
+        alert('Cita actualizada con éxito.')
+        navigate('/appointments');
       } else {
-        alert('Error al actualizar el paciente.');
+        alert('Error al actualizar la cita.');
       }
     } catch (error) {
-      alert('No se puede actualizar el paciente en este momento. Por favor, inténtalo de nuevo más tarde.');
+      alert('No se puede actualizar la cita en este momento. Por favor, inténtalo de nuevo más tarde.');
     }
   };
 
@@ -83,45 +80,45 @@ const ModificationCreationAppointment = () => {
       <Box maxWidth="500px" width="100%">
         <Paper elevation={3} sx={{ padding: 2 }}>
           <Typography variant="h5" align='center' mb={2} fontWeight={600}>
-            {isEditing ? 'Modificar información del paciente' : 'Agregar información del paciente'}
+            {isEditing ? 'Modificar cita' : 'Agregar cita'}
           </Typography>
           <Stack spacing={3}>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="fullName" mb="5px">
-                Nombre Completo
+              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="appointmentDatetime" mb="5px">
+                Fecha y Hora de la Cita
               </Typography>
-              <CustomTextField id="fullName" variant="outlined" fullWidth value={fullName} onChange={(e) => setFullName(e.target.value)} />
+              <CustomTextField id="appointmentDatetime" variant="outlined" fullWidth value={appointmentDatetime} onChange={(e) => setAppointmentDatetime(e.target.value)} inputProps={{ type: 'datetime-local' }} />
             </Box>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="address" mb="5px">
-                Dirección
+              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="reason" mb="5px">
+                Razón de la Cita
               </Typography>
-              <CustomTextField id="address" variant="outlined" fullWidth value={address} onChange={(e) => setAddress(e.target.value)} />
+              <CustomTextField id="reason" variant="outlined" fullWidth value={reason} onChange={(e) => setReason(e.target.value)} />
             </Box>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="sex" mb="5px">
-                Sexo (M/F)
+              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="notes" mb="5px">
+                Notas
               </Typography>
-              <CustomTextField id="sex" variant="outlined" fullWidth value={sex} onChange={(e) => setSex(e.target.value.toUpperCase().slice(0, 1))} inputProps={{ maxLength: 1 }} />
+              <CustomTextField id="notes" variant="outlined" fullWidth value={notes} onChange={(e) => setNotes(e.target.value)} />
             </Box>
-            <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="birthDate" mb="5px">
-                Fecha de Nacimiento
-              </Typography>
-              <CustomTextField id="birthDate" variant="outlined" fullWidth value={birthDate} onChange={(e) => setBirthDate(e.target.value)} inputProps={{ type: 'date' }} />
-            </Box>
-            <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="emergencyContact" mb="5px">
-                Contacto de Emergencia
-              </Typography>
-              <CustomTextField id="emergencyContact" variant="outlined" fullWidth value={emergencyContact} onChange={(e) => setEmergencyContact(e.target.value)} />
-            </Box>
-            <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="emergencyPhone" mb="5px">
-                Teléfono de Emergencia
-              </Typography>
-              <CustomTextField id="emergencyPhone" variant="outlined" fullWidth value={emergencyPhone} onChange={(e) => setEmergencyPhone(e.target.value)} />
-            </Box>
+            {isEditing && (
+              <Box>
+                <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="status" mb="5px">
+                  Estado de la Cita
+                </Typography>
+                <Select
+                  id="status"
+                  variant="outlined"
+                  fullWidth
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <MenuItem value="SCHEDULE">Programada</MenuItem>
+                  <MenuItem value="CANCELED">Cancelada</MenuItem>
+                  <MenuItem value="COMPLETED">Completada</MenuItem>
+                </Select>
+              </Box>
+            )}
             <Box>
               <Button color="primary" variant="contained" size="large" fullWidth onClick={handleSubmit}>
                 Guardar
