@@ -95,7 +95,7 @@ export const appointmentList = async (req, res, next) => {
     const numericLimit = parseInt(limit, 10);
     const numericPage = parseInt(page, 10);
     const offset = (numericPage - 1) * numericLimit;
-    const totalAppointments = await Appointment.count({ where: {} });
+    const totalAppointments = await Appointment.count({ where: {status: true} });
     const appointments = await Appointment.findAll({
       limit: numericLimit,
       offset
@@ -122,7 +122,7 @@ export const scheduleList = async (req, res, next) => {
     const numericLimit = parseInt(limit, 10);
     const numericPage = parseInt(page, 10);
     const offset = (numericPage - 1) * numericLimit;
-    const totalSchedules = await Schedule.count({ where: {} });
+    const totalSchedules = await Schedule.count({ where: {status: true} });
     const schedules = await Schedule.findAll({
       limit: numericLimit,
       offset
