@@ -18,7 +18,7 @@ export const registerPatientRecord = async (req, res, next) => {
       return res.status(400).json({ message: 'The patient is already registered in the system.' });
     } else {
       await sequelize.query(`
-        CALL procedure_to_register_patient(
+        CALL procedure_to_register_patient_record(
           :full_name, :address, :gender, :age, :emergency_contact, :emergency_phone, :hypertension,
           :hypertension_control, :diabetes, :diabetes_control, :hospitalization, :allergy_medication, :bleeding,
           :serious_illness, :pregnancy, :pregnancy_months, :recent_food, :recent_symptoms, :blood_pressure,
