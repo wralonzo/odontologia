@@ -36,10 +36,12 @@ const ModificationCreationPatient = () => {
 
   const handleCreate = async (patientData) => {
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`${SERVIDOR}/api/patient`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-access-token': token
         },
         body: JSON.stringify(patientData),
       });
