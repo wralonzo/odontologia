@@ -14,16 +14,9 @@ const DashboardCard = ({ title, subtitle, children, action, footer, cardheading,
       ) : (
         <CardContent sx={{ p: "30px" }}>
           {title ? (
-            <Stack
-              direction="row"
-              spacing={2}
-              justifyContent="space-between"
-              alignItems={'center'}
-              mb={3}
-            >
+            <Stack direction="row" spacing={2} justifyContent="space-between" alignItems={'center'} mb={3}>
               <Box>
                 {title ? <Typography variant="h5">{title}</Typography> : ''}
-
                 {subtitle ? (
                   <Typography variant="subtitle2" color="textSecondary">
                     {subtitle}
@@ -35,11 +28,9 @@ const DashboardCard = ({ title, subtitle, children, action, footer, cardheading,
               {action}
             </Stack>
           ) : null}
-
           {children}
         </CardContent>
       )}
-
       {middlecontent}
       {footer}
     </Card>
