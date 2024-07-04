@@ -6,7 +6,7 @@ CREATE PROCEDURE procedure_to_register_patient_record(
     IN p_full_name VARCHAR(255),
     IN p_address VARCHAR(255),
     IN p_sex CHAR(1),
-    IN p_age INT,
+    IN p_birth_date DATE,
     IN p_emergency_contact VARCHAR(255),
     IN p_emergency_phone VARCHAR(8)
 )

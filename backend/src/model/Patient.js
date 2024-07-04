@@ -26,7 +26,7 @@ const Patient = sequelize.define('patient', {
     allowNull: false
   },
   birth_date: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     allowNull: false
   },
   emergency_contact: {
