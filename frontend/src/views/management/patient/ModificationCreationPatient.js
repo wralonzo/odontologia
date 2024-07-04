@@ -98,15 +98,15 @@ const ModificationCreationPatient = () => {
             </Box>
             <Box>
               <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="sex" mb="5px">
-                Sexo
+                Sexo (M/F)
               </Typography>
-              <CustomTextField id="sex" variant="outlined" fullWidth value={sex} onChange={(e) => setSex(e.target.value)} />
+              <CustomTextField id="sex" variant="outlined" fullWidth value={sex} onChange={(e) => setSex(e.target.value.toUpperCase().slice(0, 1))} inputProps={{ maxLength: 1 }} />
             </Box>
             <Box>
               <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="birthDate" mb="5px">
                 Fecha de Nacimiento
               </Typography>
-              <CustomTextField id="birthDate" variant="outlined" fullWidth value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
+              <CustomTextField id="birthDate" variant="outlined" fullWidth value={birthDate} onChange={(e) => setBirthDate(e.target.value)} inputProps={{ type: 'date' }} />
             </Box>
             <Box>
               <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="emergencyContact" mb="5px">
