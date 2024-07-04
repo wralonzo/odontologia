@@ -15,15 +15,15 @@ const Treatment = sequelize.define('treatment', {
   },
   treatment: {
     type: DataTypes.STRING(255),
-    allowNull: false
+    allowNull: true
   },
   cost: {
     type: DataTypes.DECIMAL(10, 2),
-    allowNull: false
+    allowNull: true
   },
   date: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: true
   },
   status: {
     type: DataTypes.BOOLEAN,

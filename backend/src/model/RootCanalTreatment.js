@@ -15,7 +15,7 @@ const RootCanalTreatment = sequelize.define('root_canal_treatment', {
   },
   tooth_number: {
     type: DataTypes.STRING(50),
-    allowNull: false
+    allowNull: true
   },
   conductometry: {
     type: DataTypes.TEXT,

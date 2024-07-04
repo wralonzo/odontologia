@@ -19,15 +19,15 @@ const Patient = sequelize.define('patient', {
   },
   address: {
     type: DataTypes.STRING(255),
-    allowNull: true
+    allowNull: false
   },
   sex: {
     type: DataTypes.CHAR(1),
-    allowNull: true
+    allowNull: false
   },
-  age: {
-    type: DataTypes.INTEGER,
-    allowNull: true
+  birth_date: {
+    type: DataTypes.DATE,
+    allowNull: false
   },
   emergency_contact: {
     type: DataTypes.STRING(255),
