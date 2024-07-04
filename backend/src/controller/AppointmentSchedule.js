@@ -16,8 +16,8 @@ export const registerAppointment = async (req, res, next) => {
       await transaction.rollback();
       return res.status(404).json({ message: 'Patient does not exist or is not active.' });
     }
-    await sequelize.query('CALL procedure_to_register_appointment_schedule(:appointment_datetime, :reason, :notes, patient_id)', {
-      replacements: { patient_id, appointment_datetime, reason, notes },
+    await sequelize.query('CALL procedure_to_register_appointment_schedule(:appointment_datetime, :reason, :notes, :patient_id)', {
+      replacements: { appointment_datetime, reason, notes, patient_id },
       transaction
     });
     await transaction.commit();
