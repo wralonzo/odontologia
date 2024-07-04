@@ -8,6 +8,8 @@ import HealthQuestionnaire from './src/model/HealthQuestionnaire.js';
 import PhysicalEvaluation from './src/model/PhysicalEvaluation.js';
 import Treatment from './src/model/Treatment.js';
 import RootCanalTreatment from './src/model/RootCanalTreatment.js';
+import Appointment from './src/model/Appointment.js';
+import Schedule from './src/model/Schedule.js';
 
 const sequelize = new Sequelize(bd, user, password, {
   host: host,
@@ -23,6 +25,10 @@ Patient.hasMany(Treatment, { foreignKey: 'patient_id' });
 Treatment.belongsTo(Patient, { foreignKey: 'patient_id' });
 Patient.hasMany(RootCanalTreatment, { foreignKey: 'patient_id' });
 RootCanalTreatment.belongsTo(Patient, { foreignKey: 'patient_id' });
+Patient.hasMany(Appointment, { foreignKey: 'patient_id' });
+Appointment.belongsTo(Patient, { foreignKey: 'patient_id' });
+Appointment.hasOne(Schedule, { foreignKey: 'appointment_id' });
+Schedule.belongsTo(Appointment, { foreignKey: 'appointment_id' });
 
 (async () => {
   try {
@@ -34,6 +40,8 @@ RootCanalTreatment.belongsTo(Patient, { foreignKey: 'patient_id' });
     await PhysicalEvaluation.sync();
     await Treatment.sync();
     await RootCanalTreatment.sync();
+    await Appointment.sync();
+    await Schedule.sync();
     console.log('All tables have been created.');
   } catch (error) {
     console.error('Error creating tables:', error);

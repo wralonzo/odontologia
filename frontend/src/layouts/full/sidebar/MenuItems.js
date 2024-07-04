@@ -52,13 +52,13 @@ const Menuitems = [
     id: uniqueId(),
     title: 'Citas',
     icon: IconCalendar,
-    href: '/quotes'
+    href: '/appointment'
   },
   {
     id: uniqueId(),
     title: 'Agenda',
     icon: IconCalendar,
-    href: '/diary'
+    href: '/schedule'
   }
 ];
 
