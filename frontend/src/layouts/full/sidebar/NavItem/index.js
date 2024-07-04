@@ -43,13 +43,7 @@ const NavItem = ({ item, level, pathDirect, onClick }) => {
         target={item.external ? '_blank' : ''}
         onClick={onClick}
       >
-        <ListItemIcon
-          sx={{
-            minWidth: '36px',
-            p: '3px 0',
-            color: 'inherit',
-          }}
-        >
+        <ListItemIcon sx={{ minWidth: '36px', p: '3px 0', color: 'inherit' }}>
           {itemIcon}
         </ListItemIcon>
         <ListItemText>
@@ -60,10 +54,6 @@ const NavItem = ({ item, level, pathDirect, onClick }) => {
   );
 };
 
-NavItem.propTypes = {
-  item: PropTypes.object,
-  level: PropTypes.number,
-  pathDirect: PropTypes.any,
-};
+NavItem.propTypes = { item: PropTypes.object, level: PropTypes.number, pathDirect: PropTypes.any };
 
 export default NavItem;
