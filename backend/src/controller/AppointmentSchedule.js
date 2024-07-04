@@ -6,7 +6,7 @@ const sequelize = Appointment.sequelize;
 export const registerAppointment = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
-    const { patient_id, appointment_datetime, reason, notes } = req.body;
+    const { appointment_datetime, reason, notes, patient_id } = req.body;
     const existingPatient = await sequelize.query('SELECT COUNT(*) AS count FROM patient WHERE id = :patient_id AND status = true', {
       replacements: { patient_id },
       type: sequelize.QueryTypes.SELECT,
@@ -16,7 +16,7 @@ export const registerAppointment = async (req, res, next) => {
       await transaction.rollback();
       return res.status(404).json({ message: 'Patient does not exist or is not active.' });
     }
-    await sequelize.query('CALL procedure_to_register_appointment_schedule(:patient_id, :appointment_datetime, :reason, :notes)', {
+    await sequelize.query('CALL procedure_to_register_appointment_schedule(:appointment_datetime, :reason, :notes, patient_id)', {
       replacements: { patient_id, appointment_datetime, reason, notes },
       transaction
     });
@@ -95,7 +95,7 @@ export const appointmentList = async (req, res, next) => {
     const numericLimit = parseInt(limit, 10);
     const numericPage = parseInt(page, 10);
     const offset = (numericPage - 1) * numericLimit;
-    const totalAppointments = await Appointment.count({ where: {status: true} });
+    const totalAppointments = await Appointment.count({ where: { status: true } });
     const appointments = await Appointment.findAll({
       limit: numericLimit,
       offset
@@ -122,7 +122,7 @@ export const scheduleList = async (req, res, next) => {
     const numericLimit = parseInt(limit, 10);
     const numericPage = parseInt(page, 10);
     const offset = (numericPage - 1) * numericLimit;
-    const totalSchedules = await Schedule.count({ where: {status: true} });
+    const totalSchedules = await Schedule.count({ where: { status: true } });
     const schedules = await Schedule.findAll({
       limit: numericLimit,
       offset
