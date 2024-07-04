@@ -17,6 +17,8 @@ const Login = Loadable(lazy(() => import('../views/authentication/Login')));
 /* ****Usuarios y Pacientes**** */
 const UserList = Loadable(lazy(() => import('../views/management/user/UserList')));
 const ModificationCreationUser = Loadable(lazy(() => import('../views/management/user/ModificationCreationUser')));
+const PatientList = Loadable(lazy(() => import('../views/management/patient/PatientList')));
+const ModificationCreationPatient = Loadable(lazy(() => import('../views/management/patient/ModificationCreationPatient')));
 /* ****** */
 
 const Router = [
@@ -44,6 +46,21 @@ const Router = [
         path: '/ui/update-user/:id',
         exact: true,
         element: (<ProtectedRoute> <ModificationCreationUser /> </ProtectedRoute>)
+      },
+      {
+        path: '/patients',
+        exact: true,
+        element: (<ProtectedRoute> <PatientList /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/create-patient',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationPatient /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/update-patient/:id',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationPatient /> </ProtectedRoute>)
       },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
