@@ -3,7 +3,8 @@ import cors from 'cors';
 import logger from 'morgan';
 
 // Import routes
-import userRouter from '../route/userRoute.js'
+import userRoute from '../route/userRoute.js'
+import patientRecordRoute from '../route/patientRecordRoute.js'
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 
 // Use routes
-app.use('/api', userRouter);
+app.use('/api', userRoute);
+app.use('/api', patientRecordRoute);
 
 export default app; 
