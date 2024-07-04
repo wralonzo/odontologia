@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Paper, Stack, Typography, Select, MenuItem } from '@mui/material';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import { SERVIDOR } from '../../../api/Servidor';
@@ -13,7 +13,32 @@ const ModificationCreationAppointment = () => {
   const [appointmentDatetime, setAppointmentDatetime] = useState(isEditing ? appointmentData.appointment_datetime : '');
   const [reason, setReason] = useState(isEditing ? appointmentData.reason : '');
   const [notes, setNotes] = useState(isEditing ? appointmentData.notes : '');
-  const [status, setStatus] = useState(isEditing ? appointmentData.status : ''); // Nuevo estado para el campo status
+  const [status, setStatus] = useState(isEditing ? appointmentData.status : '');
+  const [patientId, setPatientId] = useState(isEditing ? appointmentData.patient_id : '');
+  const [patients, setPatients] = useState([]);
+
+  const fetchPatients = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${SERVIDOR}/api/patient`, {
+        headers: {
+          'x-access-token': token
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setPatients(data.patients);
+      } else {
+        console.error('Error al cargar la lista de pacientes');
+      }
+    } catch (error) {
+      console.error('Error al cargar la lista de pacientes:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPatients();
+  }, []);
 
   const handleSubmit = async () => {
     const appointmentDataToUpdate = {
@@ -21,9 +46,9 @@ const ModificationCreationAppointment = () => {
       appointment_datetime: appointmentDatetime,
       reason,
       notes,
-      status // Añadimos el campo status al objeto que se enviará
+      status,
+      patient_id: patientId
     };
-
     if (isEditing) {
       return handleUpdate(parseInt(appointmentData.id), appointmentDataToUpdate);
     } else {
@@ -100,6 +125,22 @@ const ModificationCreationAppointment = () => {
                 Notas
               </Typography>
               <CustomTextField id="notes" variant="outlined" fullWidth value={notes} onChange={(e) => setNotes(e.target.value)} />
+            </Box>
+            <Box>
+              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="patientId" mb="5px">
+                Paciente
+              </Typography>
+              <Select
+                id="patientId"
+                variant="outlined"
+                fullWidth
+                value={patientId}
+                onChange={(e) => setPatientId(e.target.value)}
+              >
+                {patients.map(patient => (
+                  <MenuItem key={patient.id} value={patient.id}>{patient.full_name}</MenuItem>
+                ))}
+              </Select>
             </Box>
             {isEditing && (
               <Box>
