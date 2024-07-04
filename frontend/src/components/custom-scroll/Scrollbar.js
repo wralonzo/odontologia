@@ -25,10 +25,6 @@ const Scrollbar = (props) => {
   );
 };
 
-Scrollbar.propTypes = {
-  children: PropTypes.node,
-  sx: PropTypes.object,
-  other: PropTypes.any,
-};
+Scrollbar.propTypes = { children: PropTypes.node, sx: PropTypes.object, other: PropTypes.any };
 
 export default Scrollbar;
