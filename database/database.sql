@@ -8,6 +8,8 @@ SELECT * FROM health_questionnaire;
 SELECT * FROM physical_evaluation;
 SELECT * FROM treatment;
 SELECT * FROM root_canal_treatment;
+SELECT * FROM appointment;
+SELECT * FROM schedule;
 
 DESCRIBE user;
 DESCRIBE patient;
@@ -15,3 +17,5 @@ DESCRIBE health_questionnaire;
 DESCRIBE physical_evaluation;
 DESCRIBE treatment;
 DESCRIBE root_canal_treatment;
+DESCRIBE appointment;
+DESCRIBE schedule;
