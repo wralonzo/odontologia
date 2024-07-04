@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, Button, TableFooter, TablePagination, CircularProgress } from '@mui/material';
+import { Table, TableBody, TableCell, TableHead, TableRow, Button, TableFooter, TablePagination, CircularProgress, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { SERVIDOR } from '../../../api/Servidor';
@@ -30,13 +30,13 @@ const PatientList = () => {
         return response.json();
       })
       .then((data) => {
-        setPatients(data.users || []);
-        setTotalPatients(data.totalUsers || 0);
+        setPatients(data.patients || []);
+        setTotalPatients(data.totalPatients || 0);
         setLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching patients:', error);
-        setError('Error al obtener los pacientes.');
+        setError('No hay pacientes disponibles.');
         setLoading(false);
       });
   };
@@ -84,7 +84,14 @@ const PatientList = () => {
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <>
+        <Button variant="contained" color="secondary" size="large" onClick={createPatient}>
+          Crear paciente
+        </Button>
+        <div>{error}</div>
+      </>
+    );
   }
 
   return (
@@ -92,68 +99,74 @@ const PatientList = () => {
       <Button variant="contained" color="secondary" size="large" onClick={createPatient}>
         Crear paciente
       </Button>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Nombre Completo</TableCell>
-            <TableCell>Dirección</TableCell>
-            <TableCell>Sexo</TableCell>
-            <TableCell>Fecha de nacimiento</TableCell>
-            <TableCell>Contacto de emergencia</TableCell>
-            <TableCell>Telefono de emergencia</TableCell>
-            <TableCell>Editar</TableCell>
-            <TableCell>Eliminar</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {patients.map((patient) => (
-            <TableRow key={patient.id}>
-              <TableCell>{patient.id}</TableCell>
-              <TableCell>{patient.full_name}</TableCell>
-              <TableCell>{patient.address}</TableCell>
-              <TableCell>{patient.sex}</TableCell>
-              <TableCell>{patient.birth_date}</TableCell>
-              <TableCell>{patient.emergency_contact}</TableCell>
-              <TableCell>{patient.emergency_phone}</TableCell>
-              <TableCell>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  onClick={() =>
-                    navigate(`/ui/update-patient/${patient.id}`, { state: { patient: patient } })
-                  }
-                >
-                  Editar
-                </Button>
-              </TableCell>
-              <TableCell>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                  onClick={() => handleDeleteLogicallyPatient(patient.id)}
-                >
-                  Eliminar
-                </Button>
-              </TableCell>
+      {patients.length > 0 ? (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Nombre Completo</TableCell>
+              <TableCell>Dirección</TableCell>
+              <TableCell>Sexo</TableCell>
+              <TableCell>Fecha de nacimiento</TableCell>
+              <TableCell>Contacto de emergencia</TableCell>
+              <TableCell>Telefono de emergencia</TableCell>
+              <TableCell>Editar</TableCell>
+              <TableCell>Eliminar</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[10, 25, 50]}
-              count={totalPatients}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {patients.map((patient) => (
+              <TableRow key={patient.id}>
+                <TableCell>{patient.id}</TableCell>
+                <TableCell>{patient.full_name}</TableCell>
+                <TableCell>{patient.address}</TableCell>
+                <TableCell>{patient.sex}</TableCell>
+                <TableCell>{patient.birth_date}</TableCell>
+                <TableCell>{patient.emergency_contact}</TableCell>
+                <TableCell>{patient.emergency_phone}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() =>
+                      navigate(`/ui/update-patient/${patient.id}`, { state: { patient: patient } })
+                    }
+                  >
+                    Editar
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="small"
+                    onClick={() => handleDeleteLogicallyPatient(patient.id)}
+                  >
+                    Eliminar
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[10, 25, 50]}
+                count={totalPatients}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      ) : (
+        <Typography variant="subtitle1" align="center">
+          No hay pacientes disponibles.
+        </Typography>
+      )}
     </>
   );
 };
