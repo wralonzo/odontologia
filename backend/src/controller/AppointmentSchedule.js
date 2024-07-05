@@ -129,7 +129,7 @@ export const scheduleList = async (req, res, next) => {
     const totalSchedules = await Schedule.count({ where: { status: true } });
     const schedules = await Schedule.findAll({
       limit: numericLimit,
-      where: {status: true},
+      where: { status: true },
       offset
     });
     const totalPages = Math.ceil(totalSchedules / numericLimit);
