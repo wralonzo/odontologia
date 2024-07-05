@@ -52,6 +52,17 @@ BEGIN
         state = p_state,
         updatedAt = NOW()
     WHERE id = p_id;
+    IF v_old_status = 'SCHEDULED' AND p_state = 'SCHEDULED' THEN
+        SELECT id INTO v_schedule_id
+        FROM schedule
+        WHERE appointment_id = p_id;
+        IF v_schedule_id IS NOT NULL THEN
+            UPDATE schedule
+            SET date = p_appointment_datetime,
+                updatedAt = NOW()
+            WHERE id = v_schedule_id;
+        END IF;
+    END IF;
     IF v_old_status = 'SCHEDULED' AND p_state = 'CANCELED' THEN
         SELECT id INTO v_schedule_id
         FROM schedule
@@ -125,4 +136,4 @@ BEGIN
 END //
 
 -- Caso 1: Cancelar una cita programada (SCHEDULED -> CANCELED)
-CALL procedure_to_update_appointment_schedule(6, '2024-07-05 10:00:00', 'Dolor de muelas', 'La paciente expresa un fuerte dolor de muelas', 'SCHEDULED');
+CALL procedure_to_update_appointment_schedule(6, '2024-08-08 10:00:00', 'Dolor de muelas', 'La paciente expresa un fuerte dolor de muelas', 'SCHEDULED');
