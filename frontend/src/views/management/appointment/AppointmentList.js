@@ -118,7 +118,7 @@ const AppointmentList = () => {
               <TableRow key={appointment.id}>
                 <TableCell>{appointment.id}</TableCell>
                 <TableCell>{appointment.patient.full_name}</TableCell>
-                <TableCell>{appointment.appointment_datetime}</TableCell>
+                <TableCell>{new Date(appointment.appointment_datetime).toISOString().slice(0, 16)}</TableCell>
                 <TableCell>{appointment.reason}</TableCell>
                 <TableCell>{appointment.notes}</TableCell>
                 <TableCell>{appointment.state}</TableCell>
