@@ -63,7 +63,6 @@ BEGIN
             state = p_state,
             updatedAt = NOW()
         WHERE id = p_id;
-
         IF v_old_status = 'SCHEDULED' AND p_state = 'CANCELED' THEN
             SELECT id INTO v_schedule_id
             FROM schedule
