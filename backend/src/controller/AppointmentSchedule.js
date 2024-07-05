@@ -1,6 +1,7 @@
 import Appointment from '../model/Appointment.js';
 import Schedule from '../model/Schedule.js';
 import Patient from '../model/Patient.js';
+import { where } from 'sequelize';
 
 const sequelize = Appointment.sequelize;
 
@@ -128,6 +129,7 @@ export const scheduleList = async (req, res, next) => {
     const totalSchedules = await Schedule.count({ where: { status: true } });
     const schedules = await Schedule.findAll({
       limit: numericLimit,
+      where: {status: true},
       offset
     });
     const totalPages = Math.ceil(totalSchedules / numericLimit);
