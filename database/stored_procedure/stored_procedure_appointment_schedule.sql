@@ -36,57 +36,45 @@ CREATE PROCEDURE procedure_to_update_appointment_schedule(
 BEGIN 
     DECLARE v_schedule_id INT;
     DECLARE v_old_status ENUM('SCHEDULED', 'CANCELED', 'COMPLETED');
-    DECLARE v_appointment_exists INT;
-    DECLARE v_appointment_state BOOLEAN;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error updating appointment and schedule.';
     END;
-    SELECT COUNT(*), IFNULL(status, TRUE)
-    INTO v_appointment_exists, v_appointment_state
+    START TRANSACTION;
+    SELECT state INTO v_old_status
     FROM appointment
     WHERE id = p_id;
-    IF v_appointment_exists = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Appointment does not exist.';
-    ELSEIF v_appointment_state = FALSE THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Appointment exists but is logically deleted.';
-    ELSE
-        START TRANSACTION;
-        SELECT status INTO v_old_status
-        FROM appointment
-        WHERE id = p_id;
-        UPDATE appointment
-        SET appointment_datetime = p_appointment_datetime,
-            reason = p_reason,
-            notes = p_notes,
-            state = p_state,
-            updatedAt = NOW()
-        WHERE id = p_id;
-        IF v_old_status = 'SCHEDULED' AND p_state = 'CANCELED' THEN
-            SELECT id INTO v_schedule_id
-            FROM schedule
-            WHERE appointment_id = p_id;
-            IF v_schedule_id IS NOT NULL THEN
-                UPDATE schedule
-                SET status = false,
-                    updatedAt = NOW()
-                WHERE id = v_schedule_id;
-            END IF;
+    UPDATE appointment
+    SET appointment_datetime = p_appointment_datetime,
+        reason = p_reason,
+        notes = p_notes,
+        state = p_state,
+        updatedAt = NOW()
+    WHERE id = p_id;
+    IF v_old_status = 'SCHEDULED' AND p_state = 'CANCELED' THEN
+        SELECT id INTO v_schedule_id
+        FROM schedule
+        WHERE appointment_id = p_id;
+        IF v_schedule_id IS NOT NULL THEN
+            UPDATE schedule
+            SET status = FALSE,
+                updatedAt = NOW()
+            WHERE id = v_schedule_id;
         END IF;
-        IF v_old_status = 'CANCELED' AND p_state = 'SCHEDULED' THEN
-            SELECT id INTO v_schedule_id
-            FROM schedule
-            WHERE appointment_id = p_id;
-            IF v_schedule_id IS NOT NULL THEN
-                UPDATE schedule
-                SET status = true,
-                    updatedAt = NOW()
-                WHERE id = v_schedule_id;
-            END IF;
-        END IF;
-        COMMIT;
     END IF;
+    IF v_old_status = 'CANCELED' AND p_state = 'SCHEDULED' THEN
+        SELECT id INTO v_schedule_id
+        FROM schedule
+        WHERE appointment_id = p_id;
+        IF v_schedule_id IS NOT NULL THEN
+            UPDATE schedule
+            SET status = TRUE,
+                updatedAt = NOW()
+            WHERE id = v_schedule_id;
+        END IF;
+    END IF;
+    COMMIT;
 END //
 
 # Procedure to Delete logically appointment and schedule
@@ -135,3 +123,6 @@ BEGIN
         END IF;
     END IF;
 END //
+
+-- Caso 1: Cancelar una cita programada (SCHEDULED -> CANCELED)
+CALL procedure_to_update_appointment_schedule(6, '2024-07-05 10:00:00', 'Dolor de muelas', 'La paciente expresa un fuerte dolor de muelas', 'SCHEDULED');
