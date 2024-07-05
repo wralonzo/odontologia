@@ -4,7 +4,6 @@ import { Box, Button, Paper, Stack, Typography, Select, MenuItem } from '@mui/ma
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import { SERVIDOR } from '../../../api/Servidor';
 
-// Función para formatear la fecha y hora
 const formatDateTime = (datetime) => {
   if (!datetime) return '';
   const date = new Date(datetime);
@@ -182,7 +181,7 @@ const ModificationCreationAppointment = () => {
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
                 >
-                  <MenuItem value="SCHEDULE">Programada</MenuItem>
+                  <MenuItem value="SCHEDULED">Programada</MenuItem>
                   <MenuItem value="CANCELED">Cancelada</MenuItem>
                   <MenuItem value="COMPLETED">Completada</MenuItem>
                 </Select>
