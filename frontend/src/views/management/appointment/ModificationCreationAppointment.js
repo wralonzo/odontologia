@@ -4,16 +4,25 @@ import { Box, Button, Paper, Stack, Typography, Select, MenuItem } from '@mui/ma
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import { SERVIDOR } from '../../../api/Servidor';
 
+// Función para formatear la fecha y hora
+const formatDateTime = (datetime) => {
+  if (!datetime) return '';
+  const date = new Date(datetime);
+  const offset = date.getTimezoneOffset() * 60000;
+  const localISOTime = new Date(date.getTime() - offset).toISOString().slice(0, 16);
+  return localISOTime;
+};
+
 const ModificationCreationAppointment = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const appointmentData = state?.appointment || {};
   const isEditing = !!appointmentData.id;
   const [appointmentId] = useState(isEditing ? appointmentData.id : '');
-  const [appointmentDatetime, setAppointmentDatetime] = useState(isEditing ? appointmentData.appointment_datetime : '');
+  const [appointmentDatetime, setAppointmentDatetime] = useState(isEditing ? formatDateTime(appointmentData.appointment_datetime) : '');
   const [reason, setReason] = useState(isEditing ? appointmentData.reason : '');
   const [notes, setNotes] = useState(isEditing ? appointmentData.notes : '');
-  const [status, setStatus] = useState(isEditing ? appointmentData.status : '');
+  const [status, setStatus] = useState(isEditing ? appointmentData.state : '');
   const [patientId, setPatientId] = useState(isEditing ? appointmentData.patient_id : '');
   const [patients, setPatients] = useState([]);
 
@@ -45,11 +54,10 @@ const ModificationCreationAppointment = () => {
       appointment_datetime: appointmentDatetime,
       reason,
       notes,
-      patient_id: patientId
+      patient_id: patientId,
+      state: status
     };
-
     if (isEditing) {
-      appointmentDataToUpdate.state = status;
       appointmentDataToUpdate.id = appointmentId;
       return handleUpdate(appointmentId, appointmentDataToUpdate);
     } else {
@@ -113,19 +121,38 @@ const ModificationCreationAppointment = () => {
               <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="appointmentDatetime" mb="5px">
                 Fecha y Hora de la Cita
               </Typography>
-              <CustomTextField id="appointmentDatetime" variant="outlined" fullWidth value={appointmentDatetime} onChange={(e) => setAppointmentDatetime(e.target.value)} inputProps={{ type: 'datetime-local' }} />
+              <CustomTextField
+                id="appointmentDatetime"
+                variant="outlined"
+                fullWidth
+                value={appointmentDatetime}
+                onChange={(e) => setAppointmentDatetime(e.target.value)}
+                inputProps={{ type: 'datetime-local' }}
+              />
             </Box>
             <Box>
               <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="reason" mb="5px">
                 Razón de la Cita
               </Typography>
-              <CustomTextField id="reason" variant="outlined" fullWidth value={reason} onChange={(e) => setReason(e.target.value)} />
+              <CustomTextField
+                id="reason"
+                variant="outlined"
+                fullWidth
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+              />
             </Box>
             <Box>
               <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="notes" mb="5px">
                 Notas
               </Typography>
-              <CustomTextField id="notes" variant="outlined" fullWidth value={notes} onChange={(e) => setNotes(e.target.value)} />
+              <CustomTextField
+                id="notes"
+                variant="outlined"
+                fullWidth
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
             </Box>
             <Box>
               <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="patientId" mb="5px">
