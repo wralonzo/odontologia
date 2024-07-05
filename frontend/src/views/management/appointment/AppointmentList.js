@@ -104,6 +104,7 @@ const AppointmentList = () => {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
+              <TableCell>Paciente</TableCell>
               <TableCell>Fecha y Hora</TableCell>
               <TableCell>Razón</TableCell>
               <TableCell>Notas</TableCell>
@@ -116,6 +117,7 @@ const AppointmentList = () => {
             {appointments.map((appointment) => (
               <TableRow key={appointment.id}>
                 <TableCell>{appointment.id}</TableCell>
+                <TableCell>{appointment.patient.full_name}</TableCell>
                 <TableCell>{appointment.appointment_datetime}</TableCell>
                 <TableCell>{appointment.reason}</TableCell>
                 <TableCell>{appointment.notes}</TableCell>
