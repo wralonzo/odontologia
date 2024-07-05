@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import { bd, user, password, host, port } from '../database/database.js';
+import Appointment from './Appointment.js';
 
 const sequelize = new Sequelize(bd, user, password, {
   host: host,
@@ -24,5 +25,8 @@ const Schedule = sequelize.define('schedule', {
 }, {
   freezeTableName: true
 });
+
+Schedule.belongsTo(Appointment, { foreignKey: 'appointment_id' });
+Appointment.hasOne(Schedule, { foreignKey: 'appointment_id' });
 
 export default Schedule;

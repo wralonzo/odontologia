@@ -1,7 +1,6 @@
 import Appointment from '../model/Appointment.js';
 import Schedule from '../model/Schedule.js';
 import Patient from '../model/Patient.js';
-import { where } from 'sequelize';
 
 const sequelize = Appointment.sequelize;
 
@@ -126,11 +125,18 @@ export const scheduleList = async (req, res, next) => {
     const numericLimit = parseInt(limit, 10);
     const numericPage = parseInt(page, 10);
     const offset = (numericPage - 1) * numericLimit;
-    const totalSchedules = await Schedule.count({ where: { status: true } });
-    const schedules = await Schedule.findAll({
-      limit: numericLimit,
+    const { count: totalSchedules, rows: schedules } = await Schedule.findAndCountAll({
       where: { status: true },
-      offset
+      limit: numericLimit,
+      offset,
+      include: [{
+        model: Appointment,
+        attributes: ['reason'],
+        include: [{
+          model: Patient,
+          attributes: ['full_name']
+        }]
+      }]
     });
     const totalPages = Math.ceil(totalSchedules / numericLimit);
     if (!schedules || schedules.length === 0) {

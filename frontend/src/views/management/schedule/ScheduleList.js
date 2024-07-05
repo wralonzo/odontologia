@@ -61,12 +61,16 @@ const ScheduleList = () => {
       <TableHead>
         <TableRow>
           <TableCell>Fecha</TableCell>
+          <TableCell>Nombre del Paciente</TableCell>
+          <TableCell>Motivo de la Cita</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {schedules.map((schedule) => (
           <TableRow key={schedule.id}>
             <TableCell>{schedule.date}</TableCell>
+            <TableCell>{schedule.appointment?.patient?.full_name}</TableCell>
+            <TableCell>{schedule.appointment?.reason}</TableCell>
           </TableRow>
         ))}
       </TableBody>
