@@ -107,6 +107,7 @@ const AppointmentList = () => {
               <TableCell>Fecha y Hora</TableCell>
               <TableCell>Razón</TableCell>
               <TableCell>Notas</TableCell>
+              <TableCell>Estado</TableCell>
               <TableCell>Editar</TableCell>
               <TableCell>Eliminar</TableCell>
             </TableRow>
@@ -118,6 +119,7 @@ const AppointmentList = () => {
                 <TableCell>{appointment.appointment_datetime}</TableCell>
                 <TableCell>{appointment.reason}</TableCell>
                 <TableCell>{appointment.notes}</TableCell>
+                <TableCell>{appointment.state}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"

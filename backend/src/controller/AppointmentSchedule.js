@@ -1,5 +1,6 @@
 import Appointment from '../model/Appointment.js';
 import Schedule from '../model/Schedule.js';
+import Patient from '../model/Patient.js';
 
 const sequelize = Appointment.sequelize;
 
@@ -95,11 +96,13 @@ export const appointmentList = async (req, res, next) => {
     const numericLimit = parseInt(limit, 10);
     const numericPage = parseInt(page, 10);
     const offset = (numericPage - 1) * numericLimit;
-    const totalAppointments = await Appointment.count({ where: { status: true } });
-    const appointments = await Appointment.findAll({
+    const { count, rows: appointments } = await Appointment.findAndCountAll({
+      where: { status: true },
       limit: numericLimit,
-      offset
+      offset,
+      include: [{ model: Patient, attributes: ['id', 'full_name'] }]
     });
+    const totalAppointments = count;
     const totalPages = Math.ceil(totalAppointments / numericLimit);
     if (!appointments || appointments.length === 0) {
       return res.status(404).json({ message: 'No appointments found.' });

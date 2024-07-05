@@ -49,7 +49,7 @@ const ModificationCreationAppointment = () => {
     };
 
     if (isEditing) {
-      appointmentDataToUpdate.status = status;
+      appointmentDataToUpdate.state = status;
       appointmentDataToUpdate.id = appointmentId;
       return handleUpdate(appointmentId, appointmentDataToUpdate);
     } else {
