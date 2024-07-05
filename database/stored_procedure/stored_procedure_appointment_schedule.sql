@@ -149,6 +149,3 @@ BEGIN
         END IF;
     END IF;
 END //
-
--- Caso 1: Cancelar una cita programada (SCHEDULED -> CANCELED)
-CALL procedure_to_update_appointment_schedule(6, '2024-07-07 10:00:00', 'Dolor de muelas', 'La paciente expresa un fuerte dolor de muelas', 'COMPLETED');
