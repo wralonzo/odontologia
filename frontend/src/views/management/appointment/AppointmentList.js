@@ -30,7 +30,11 @@ const AppointmentList = () => {
         return response.json();
       })
       .then((data) => {
-        setAppointments(data.appointments || []);
+        const translatedAppointments = data.appointments.map((appointment) => ({
+          ...appointment,
+          state: translateState(appointment.state)
+        }));
+        setAppointments(translatedAppointments || []);
         setTotalAppointments(data.totalAppointments || 0);
         setLoading(false);
       })
@@ -39,6 +43,19 @@ const AppointmentList = () => {
         setError('No hay citas disponibles.');
         setLoading(false);
       });
+  };
+
+  const translateState = (state) => {
+    switch (state) {
+      case 'SCHEDULED':
+        return 'PROGRAMADA';
+      case 'COMPLETED':
+        return 'COMPLETADA';
+      case 'CANCELED':
+        return 'CANCELADA';
+      default:
+        return state;
+    }
   };
 
   const handleChangePage = (event, newPage) => {
