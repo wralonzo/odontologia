@@ -7,9 +7,7 @@ import { SERVIDOR } from '../../../api/Servidor';
 const formatDateTime = (datetime) => {
   if (!datetime) return '';
   const date = new Date(datetime);
-  const offset = date.getTimezoneOffset() * 60000;
-  const localISOTime = new Date(date.getTime() - offset).toISOString().slice(0, 16);
-  return localISOTime;
+  return date.toISOString().slice(0, 16);
 };
 
 const ModificationCreationAppointment = () => {
