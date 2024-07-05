@@ -33,9 +33,9 @@ export const registerAppointment = async (req, res, next) => {
 export const updateAppointment = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
-    const { appointment_id, appointment_datetime, reason, notes, state } = req.body;
-    const existingAppointment = await sequelize.query('SELECT COUNT(*) AS count, status FROM appointment WHERE id = :appointment_id', {
-      replacements: { appointment_id },
+    const { id, appointment_datetime, reason, notes, state } = req.body;
+    const existingAppointment = await sequelize.query('SELECT COUNT(*) AS count, status FROM appointment WHERE id = :id', {
+      replacements: { id },
       type: sequelize.QueryTypes.SELECT,
       transaction: transaction
     });
@@ -47,8 +47,8 @@ export const updateAppointment = async (req, res, next) => {
       await transaction.rollback();
       return res.status(400).json({ message: 'Appointment has already been logically deleted.' });
     }
-    await sequelize.query('CALL procedure_to_update_appointment_schedule(:appointment_id, :appointment_datetime, :reason, :notes, :state)', {
-      replacements: { appointment_id, appointment_datetime, reason, notes, state },
+    await sequelize.query('CALL procedure_to_update_appointment_schedule(:id, :appointment_datetime, :reason, :notes, :state)', {
+      replacements: { id, appointment_datetime, reason, notes, state },
       transaction: transaction
     });
     await transaction.commit();

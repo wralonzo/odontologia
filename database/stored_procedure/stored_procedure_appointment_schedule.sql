@@ -27,7 +27,7 @@ END //
 # Procedure to update appointment and schedule
 DELIMITER //
 CREATE PROCEDURE procedure_to_update_appointment_schedule(
-    IN p_appointment_id INT,
+    IN p_id INT,
     IN p_appointment_datetime DATETIME,
     IN p_reason VARCHAR(255),
     IN p_notes TEXT,
@@ -46,7 +46,7 @@ BEGIN
     SELECT COUNT(*), IFNULL(status, TRUE)
     INTO v_appointment_exists, v_appointment_state
     FROM appointment
-    WHERE id = p_appointment_id;
+    WHERE id = p_id;
     IF v_appointment_exists = 0 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Appointment does not exist.';
     ELSEIF v_appointment_state = FALSE THEN
@@ -55,18 +55,19 @@ BEGIN
         START TRANSACTION;
         SELECT status INTO v_old_status
         FROM appointment
-        WHERE id = p_appointment_id;
+        WHERE id = p_id;
         UPDATE appointment
         SET appointment_datetime = p_appointment_datetime,
             reason = p_reason,
             notes = p_notes,
             state = p_state,
             updatedAt = NOW()
-        WHERE id = p_appointment_id;
-        IF v_old_status = 'SCHEDULED' AND p_status = 'CANCELED' THEN
+        WHERE id = p_id;
+
+        IF v_old_status = 'SCHEDULED' AND p_state = 'CANCELED' THEN
             SELECT id INTO v_schedule_id
             FROM schedule
-            WHERE appointment_id = p_appointment_id;
+            WHERE appointment_id = p_id;
             IF v_schedule_id IS NOT NULL THEN
                 UPDATE schedule
                 SET status = false,
@@ -74,10 +75,10 @@ BEGIN
                 WHERE id = v_schedule_id;
             END IF;
         END IF;
-        IF v_old_status = 'CANCELED' AND p_status = 'SCHEDULED' THEN
+        IF v_old_status = 'CANCELED' AND p_state = 'SCHEDULED' THEN
             SELECT id INTO v_schedule_id
             FROM schedule
-            WHERE appointment_id = p_appointment_id;
+            WHERE appointment_id = p_id;
             IF v_schedule_id IS NOT NULL THEN
                 UPDATE schedule
                 SET status = true,
