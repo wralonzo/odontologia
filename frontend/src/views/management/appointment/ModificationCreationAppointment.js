@@ -88,6 +88,7 @@ const ModificationCreationAppointment = () => {
 
   const handleUpdate = async (appointmentId, appointmentData) => {
     try {
+      const { patient_id, ...updateData } = appointmentData;
       const token = localStorage.getItem('token');
       const response = await fetch(`${SERVIDOR}/api/appointment/${appointmentId}`, {
         method: 'PUT',
@@ -95,7 +96,7 @@ const ModificationCreationAppointment = () => {
           'Content-Type': 'application/json',
           'x-access-token': token
         },
-        body: JSON.stringify(appointmentData),
+        body: JSON.stringify(updateData),
       });
       if (response.ok) {
         alert('Cita actualizada con éxito.');
@@ -163,6 +164,7 @@ const ModificationCreationAppointment = () => {
                 fullWidth
                 value={patientId}
                 onChange={(e) => setPatientId(e.target.value)}
+                disabled={isEditing}
               >
                 {patients.map(patient => (
                   <MenuItem key={patient.id} value={patient.id}>{patient.full_name}</MenuItem>
