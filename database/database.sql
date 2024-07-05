@@ -10,3 +10,5 @@ SELECT * FROM treatment;
 SELECT * FROM root_canal_treatment;
 SELECT * FROM appointment;
 SELECT * FROM schedule;
+SELECT * FROM clinical_history;
+SELECT * FROM inventory;
