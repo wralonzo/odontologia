@@ -36,7 +36,7 @@ CREATE PROCEDURE procedure_to_update_patient(
 BEGIN 
     DECLARE v_existing_status BOOLEAN;
     SELECT IFNULL(status, TRUE) INTO v_existing_status
-    FROM user
+    FROM patient
     WHERE id = p_id;
     IF v_existing_status IS NULL THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Patient does not exist.';
