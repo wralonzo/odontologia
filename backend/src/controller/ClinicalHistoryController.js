@@ -69,13 +69,17 @@ export const deleteLogicallyClinicalHistory = async (req, res, next) => {
 
 export const clinicalHistoryList = async (req, res, next) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 10, patient_id } = req.query;
     const numericLimit = parseInt(limit, 10);
     const numericPage = parseInt(page, 10);
     const offset = (numericPage - 1) * numericLimit;
-    const totalRecords = await ClinicalHistory.count({ where: { status: true } });
+    const whereClause = { status: true };
+    if (patient_id) {
+      whereClause.patient_id = patient_id;
+    }
+    const totalRecords = await ClinicalHistory.count({ where: whereClause });
     const records = await ClinicalHistory.findAll({
-      where: { status: true },
+      where: whereClause,
       limit: numericLimit,
       offset: offset
     });
