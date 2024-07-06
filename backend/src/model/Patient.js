@@ -35,8 +35,7 @@ const Patient = sequelize.define('patient', {
   },
   emergency_phone: {
     type: DataTypes.STRING(8),
-    allowNull: true,
-    unique: true
+    allowNull: true
   },
   status: {
     type: DataTypes.BOOLEAN,
