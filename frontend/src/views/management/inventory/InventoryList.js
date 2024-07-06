@@ -102,7 +102,6 @@ const InventoryList = () => {
               <TableCell>Nombre</TableCell>
               <TableCell>Descripción</TableCell>
               <TableCell>Cantidad</TableCell>
-              <TableCell>Precio</TableCell>
               <TableCell>Editar</TableCell>
               <TableCell>Eliminar</TableCell>
             </TableRow>
@@ -111,10 +110,9 @@ const InventoryList = () => {
             {items.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{item.id}</TableCell>
-                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.item_name}</TableCell>
                 <TableCell>{item.description}</TableCell>
                 <TableCell>{item.quantity}</TableCell>
-                <TableCell>{item.price}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
