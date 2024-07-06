@@ -30,8 +30,8 @@ const InventoryList = () => {
         return response.json();
       })
       .then((data) => {
-        setItems(data.items || []);
-        setTotalItems(data.totalItems || 0);
+        setItems(data.records || []); // Aquí ajustamos para acceder a data.records
+        setTotalItems(data.totalRecords || 0); // Ajustamos para acceder a data.totalRecords
         setLoading(false);
       })
       .catch((error) => {
