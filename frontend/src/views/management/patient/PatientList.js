@@ -1,7 +1,22 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, Button, TableFooter, TablePagination, CircularProgress, Typography } from '@mui/material';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Button,
+  TableFooter,
+  TablePagination,
+  CircularProgress,
+  Typography,
+  Modal,
+  Box,
+  IconButton
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { SERVIDOR } from '../../../api/Servidor';
+import PaperIcon from '@mui/icons-material/Description'; // Ícono de papel
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
@@ -10,6 +25,9 @@ const PatientList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [clinicalHistory, setClinicalHistory] = useState([]);
+  const [setSelectedPatientId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,6 +56,22 @@ const PatientList = () => {
         console.error('Error fetching patients:', error);
         setError('No hay pacientes disponibles.');
         setLoading(false);
+      });
+  };
+
+  const fetchClinicalHistory = (patientId) => {
+    const token = localStorage.getItem('token');
+    fetch(`${SERVIDOR}/api/clinical-history/patient/${patientId}`, {
+      headers: { 'x-access-token': token }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setClinicalHistory(data.records || []);
+        setSelectedPatientId(patientId);
+        setOpen(true);
+      })
+      .catch((error) => {
+        console.error('Error fetching clinical history:', error);
       });
   };
 
@@ -79,6 +113,12 @@ const PatientList = () => {
     }
   };
 
+  const handleClose = () => {
+    setOpen(false);
+    setClinicalHistory([]);
+    setSelectedPatientId(null);
+  };
+
   if (loading) {
     return <CircularProgress />;
   }
@@ -112,6 +152,7 @@ const PatientList = () => {
               <TableCell>Telefono de emergencia</TableCell>
               <TableCell>Editar</TableCell>
               <TableCell>Eliminar</TableCell>
+              <TableCell>Historial</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -146,6 +187,14 @@ const PatientList = () => {
                     Eliminar
                   </Button>
                 </TableCell>
+                <TableCell>
+                  <IconButton
+                    color="primary"
+                    onClick={() => fetchClinicalHistory(patient.id)}
+                  >
+                    <PaperIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -167,6 +216,24 @@ const PatientList = () => {
           No hay pacientes disponibles.
         </Typography>
       )}
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={{ p: 4, bgcolor: 'background.paper', margin: 'auto', maxWidth: 600, top: '50%', left: '50%', transform: 'translate(-50%, -50%)', position: 'absolute' }}>
+          <Typography variant="h6" component="h2">
+            Historial Clínico
+          </Typography>
+          {clinicalHistory.length > 0 ? (
+            clinicalHistory.map((record) => (
+              <Box key={record.id} sx={{ my: 2 }}>
+                <Typography variant="body1"><strong>Detalles:</strong> {record.details}</Typography>
+                <Typography variant="body1"><strong>Fecha:</strong> {new Date(record.date).toLocaleDateString()}</Typography>
+                <Typography variant="body1"><strong>Estado:</strong> {record.status ? 'Activo' : 'Inactivo'}</Typography>
+              </Box>
+            ))
+          ) : (
+            <Typography variant="body1">No hay registros disponibles.</Typography>
+          )}
+        </Box>
+      </Modal>
     </>
   );
 };
