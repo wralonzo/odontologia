@@ -1,4 +1,3 @@
-import { Sequelize } from 'sequelize';
 import Inventory from '../model/Inventory.js';
 
 const sequelize = Inventory.sequelize;
@@ -6,9 +5,9 @@ const sequelize = Inventory.sequelize;
 export const registerInventory = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
-    const { item_name, quantity, location, last_updated } = req.body;
-    await sequelize.query('CALL procedure_to_register_inventory(:item_name, :quantity, :location, :last_updated)', {
-      replacements: { item_name, quantity, location, last_updated },
+    const { item_name, quantity, description } = req.body;
+    await sequelize.query('CALL procedure_to_register_inventory(:item_name, :quantity, :description)', {
+      replacements: { item_name: item_name, quantity: quantity, description: description },
       transaction: transaction
     });
     await transaction.commit();
@@ -23,14 +22,14 @@ export const registerInventory = async (req, res, next) => {
 export const updateInventory = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
-    const { id, item_name, quantity, location, last_updated } = req.body;
+    const { id, item_name, quantity, description } = req.body;
     const existingRecord = await Inventory.findByPk(id, { transaction });
     if (!existingRecord) {
       await transaction.rollback();
       return res.status(400).json({ message: 'Inventory record does not exist.' });
     }
-    await sequelize.query('CALL procedure_to_update_inventory(:id, :item_name, :quantity, :location, :last_updated)', {
-      replacements: { id, item_name, quantity, location, last_updated },
+    await sequelize.query('CALL procedure_to_update_inventory(:id, :item_name, :quantity, :description)', {
+      replacements: { id: id, item_name: item_name, quantity: quantity, description: description },
       transaction: transaction
     });
     await transaction.commit();

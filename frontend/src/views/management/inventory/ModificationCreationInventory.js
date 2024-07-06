@@ -17,7 +17,7 @@ const ModificationCreationInventory = () => {
 
   const handleSubmit = async () => {
     const itemDataToUpdate = {
-      name,
+      item_name: name,
       description,
       quantity,
       price
