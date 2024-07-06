@@ -2,6 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Button, TableFooter, 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { SERVIDOR } from '../../../api/Servidor';
+import { IconFileInvoice, IconUser } from '@tabler/icons';
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
