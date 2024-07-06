@@ -114,7 +114,7 @@ const ModificationCreationAppointment = () => {
           }),
         });
       }
-      alert('Cita actualizada y registro de historia clínica exitosos.');
+      alert('Cita actualizada con exito.');
       navigate('/appointments');
     } catch (error) {
       alert('No se puede actualizar la cita en este momento. Por favor, inténtalo de nuevo más tarde.');
