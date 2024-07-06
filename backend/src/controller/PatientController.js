@@ -39,8 +39,8 @@ export const updatePatient = async (req, res, next) => {
       return res.status(400).json({ message: 'Patient exists but is logically deleted.' });
     }
     await sequelize.query('CALL procedure_to_update_patient(:id, :full_name, :address, :sex, :birth_date, :emergency_contact, :emergency_phone)', {
-      replacements: { id, full_name, address, sex, birth_date, emergency_contact, emergency_phone },
-      transaction
+      replacements: { id: id, full_name: full_name, address: address, sex: sex, birth_date: birth_date, emergency_contact: emergency_contact, emergency_phone: emergency_phone },
+      transaction: transaction
     });
     await transaction.commit();
     res.json({ message: 'Patient updated successfully.' });
