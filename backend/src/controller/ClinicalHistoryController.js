@@ -67,12 +67,15 @@ export const deleteLogicallyClinicalHistory = async (req, res, next) => {
   }
 };
 
+// Controlador - ClinicalHistoryController.js
+
 export const clinicalHistoryList = async (req, res, next) => {
   try {
-    const { page = 1, limit = 10, patient_id } = req.query;
+    const { page = 1, limit = 10 } = req.query;
     const numericLimit = parseInt(limit, 10);
     const numericPage = parseInt(page, 10);
     const offset = (numericPage - 1) * numericLimit;
+    const { id: patient_id } = req.params;
     const whereClause = { status: true };
     if (patient_id) {
       whereClause.patient_id = patient_id;

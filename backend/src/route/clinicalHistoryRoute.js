@@ -13,7 +13,7 @@ router.put('/clinical-history/:id', verifyToken, updateClinicalHistory);
 // ENDPOIN - DELETE LOGICALLY CLINICAL HOSTORY
 router.patch('/clinical-history', verifyToken, deleteLogicallyClinicalHistory);
 
-// ENDPOINT - CLINICAL HOSTORY LIST
-router.get('/clinical-history', verifyToken, clinicalHistoryList);
+// ENDPOINT - CLINICAL HISTORY LIST FOR A PATIENT
+router.get('/clinical-history/patient/:id', verifyToken, clinicalHistoryList);
 
 export default router; 
