@@ -10,20 +10,18 @@ const ModificationCreationInventory = () => {
   const itemData = state?.item || {};
   const isEditing = !!itemData.id;
   const [itemId] = useState(isEditing ? itemData.id : '');
-  const [name, setName] = useState(isEditing ? itemData.name : '');
+  const [name, setName] = useState(isEditing ? itemData.item_name : '');
   const [description, setDescription] = useState(isEditing ? itemData.description : '');
   const [quantity, setQuantity] = useState(isEditing ? itemData.quantity : '');
-  const [price, setPrice] = useState(isEditing ? itemData.price : '');
 
   const handleSubmit = async () => {
     const itemDataToUpdate = {
       item_name: name,
       description,
-      quantity,
-      price
+      quantity
     };
     if (isEditing) {
-      itemDataToUpdate.id = itemId; // Incluir el id solo en caso de edición
+      itemDataToUpdate.id = itemId; 
       return handleUpdate(parseInt(itemData.id), itemDataToUpdate);
     } else {
       return handleCreate(itemDataToUpdate);
@@ -99,12 +97,6 @@ const ModificationCreationInventory = () => {
                 Cantidad
               </Typography>
               <CustomTextField id="quantity" variant="outlined" fullWidth value={quantity} onChange={(e) => setQuantity(e.target.value)} />
-            </Box>
-            <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="price" mb="5px">
-                Precio
-              </Typography>
-              <CustomTextField id="price" variant="outlined" fullWidth value={price} onChange={(e) => setPrice(e.target.value)} />
             </Box>
             <Box>
               <Button color="primary" variant="contained" size="large" fullWidth onClick={handleSubmit}>
