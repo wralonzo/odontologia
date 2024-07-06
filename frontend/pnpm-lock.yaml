@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@date-io/dayjs':
+        specifier: ^3.0.0
+        version: 3.0.0(dayjs@1.11.11)
       '@emotion/react':
         specifier: ^11.10.0
         version: 11.11.4(@types/react@18.3.3)(react@18.3.1)
@@ -27,7 +30,7 @@ importers:
         specifier: ^5.15.20
         version: 5.15.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
       '@mui/x-date-pickers':
-        specifier: ^5.0.6
+        specifier: ^5.0.20
         version: 5.0.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@mui/material@5.15.21(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mui/system@5.15.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(dayjs@1.11.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@reduxjs/toolkit':
         specifier: ^1.8.3
@@ -50,6 +53,9 @@ importers:
       chance:
         specifier: ^1.1.9
         version: 1.1.11
+      dayjs:
+        specifier: ^1.11.11
+        version: 1.11.11
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1032,6 +1038,9 @@ packages:
   '@date-io/core@2.17.0':
     resolution: {integrity: sha512-+EQE8xZhRM/hsY0CDTVyayMDDY5ihc4MqXCrPxooKw19yAzUIC6uUqsZeaOFNL9YKTNxYKrJP5DFgE8o5xRCOw==}
 
+  '@date-io/core@3.0.0':
+    resolution: {integrity: sha512-S3j+IAQVBYNkQzchVVhX40eBkGDreBpScy9RXwTS5j2+k07+62pMVPisQ44Gq76Rqy5AOG/EZXCwBpY/jbemvA==}
+
   '@date-io/date-fns@2.17.0':
     resolution: {integrity: sha512-L0hWZ/mTpy3Gx/xXJ5tq5CzHo0L7ry6KEO9/w/JWiFWFLZgiNVo3ex92gOl3zmzjHqY/3Ev+5sehAr8UnGLEng==}
     peerDependencies:
@@ -1042,6 +1051,14 @@ packages:
 
   '@date-io/dayjs@2.17.0':
     resolution: {integrity: sha512-Iq1wjY5XzBh0lheFA0it6Dsyv94e8mTiNR8vuTai+KopxDkreL3YjwTmZHxkgB7/vd0RMIACStzVgWvPATnDCA==}
+    peerDependencies:
+      dayjs: ^1.8.17
+    peerDependenciesMeta:
+      dayjs:
+        optional: true
+
+  '@date-io/dayjs@3.0.0':
+    resolution: {integrity: sha512-vy7DSwoQiPA2L0stRqW3le7lcEBMjoMMEmbpCNkyoX3xXizKInFvhbnOBmCyusIQ7tL/WsNC4X5bVgdNWX0JLA==}
     peerDependencies:
       dayjs: ^1.8.17
     peerDependenciesMeta:
@@ -8225,6 +8242,8 @@ snapshots:
 
   '@date-io/core@2.17.0': {}
 
+  '@date-io/core@3.0.0': {}
+
   '@date-io/date-fns@2.17.0':
     dependencies:
       '@date-io/core': 2.17.0
@@ -8232,6 +8251,12 @@ snapshots:
   '@date-io/dayjs@2.17.0(dayjs@1.11.11)':
     dependencies:
       '@date-io/core': 2.17.0
+    optionalDependencies:
+      dayjs: 1.11.11
+
+  '@date-io/dayjs@3.0.0(dayjs@1.11.11)':
+    dependencies:
+      '@date-io/core': 3.0.0
     optionalDependencies:
       dayjs: 1.11.11
 

@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, TableFooter, TablePag
 import { useEffect, useState } from 'react';
 import { SERVIDOR } from '../../../api/Servidor';
 
-const ScheduleList = () => {
+const Schedule = () => {
   const [schedules, setSchedules] = useState([]);
   const [totalSchedules, setTotalSchedules] = useState(0);
   const [page, setPage] = useState(0);
@@ -90,4 +90,4 @@ const ScheduleList = () => {
   );
 };
 
-export default ScheduleList;
+export default Schedule;
