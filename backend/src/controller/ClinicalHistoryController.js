@@ -1,4 +1,3 @@
-import { Sequelize } from 'sequelize';
 import ClinicalHistory from '../model/ClinicalHistory.js';
 
 const sequelize = ClinicalHistory.sequelize;
@@ -6,9 +5,9 @@ const sequelize = ClinicalHistory.sequelize;
 export const registerClinicalHistory = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
-    const { patient_id, description, treatment_plan, date } = req.body;
-    await sequelize.query('CALL procedure_to_register_clinical_history(:patient_id, :description, :treatment_plan, :date)', {
-      replacements: { patient_id, description, treatment_plan, date },
+    const { patient_id, details, date } = req.body;
+    await sequelize.query('CALL procedure_to_register_clinical_history(:patient_id, :details, :date)', {
+      replacements: { patient_id: patient_id, details: details, date: date },
       transaction: transaction
     });
     await transaction.commit();
@@ -23,14 +22,14 @@ export const registerClinicalHistory = async (req, res, next) => {
 export const updateClinicalHistory = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
-    const { id, patient_id, description, treatment_plan, date } = req.body;
+    const { id, patient_id, details, date } = req.body;
     const existingRecord = await ClinicalHistory.findByPk(id, { transaction });
     if (!existingRecord) {
       await transaction.rollback();
       return res.status(400).json({ message: 'Clinical history record does not exist.' });
     }
-    await sequelize.query('CALL procedure_to_update_clinical_history(:id, :patient_id, :description, :treatment_plan, :date)', {
-      replacements: { id, patient_id, description, treatment_plan, date },
+    await sequelize.query('CALL procedure_to_update_clinical_history(:id, :patient_id, :details, :date)', {
+      replacements: { id: id, patient_id: patient_id, description: description, date: date },
       transaction: transaction
     });
     await transaction.commit();
