@@ -86,7 +86,7 @@ const ModificationCreationAppointment = () => {
 
   const handleUpdate = async (appointmentId, appointmentData) => {
     try {
-      const { patient_id, ...updateData } = appointmentData;
+      const { patient_id, reason, ...updateData } = appointmentData;
       const token = localStorage.getItem('token');
       const response = await fetch(`${SERVIDOR}/api/appointment/${appointmentId}`, {
         method: 'PUT',
@@ -96,12 +96,25 @@ const ModificationCreationAppointment = () => {
         },
         body: JSON.stringify(updateData),
       });
-      if (response.ok) {
-        alert('Cita actualizada con éxito.');
-        navigate('/appointments');
-      } else {
+      if (!response.ok) {
         alert('Error al actualizar la cita.');
+        return;
       }
+      await fetch(`${SERVIDOR}/api/clinical-history`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify({
+          patient_id: patient_id,
+          details: reason,
+          date: updateData.date
+        }),
+      });
+
+      alert('Cita actualizada y registro de historia clínica exitosos.');
+      navigate('/appointments');
     } catch (error) {
       alert('No se puede actualizar la cita en este momento. Por favor, inténtalo de nuevo más tarde.');
     }
