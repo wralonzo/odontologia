@@ -27,6 +27,11 @@ const ModificationCreationAppointment = Loadable(lazy(() => import('../views/man
 const ScheduleList = Loadable(lazy(() => import('../views/management/schedule/ScheduleList')));
 /* ****** */
 
+/* ****Inventario y Facturación**** */
+const InventoryList = Loadable(lazy(() => import('../views/management/inventory/InventoryList')));
+const ModificationCreationInventory = Loadable(lazy(() => import('../views/management/inventory/ModificationCreationInventory')));
+/* ****** */
+
 const Router = [
   {
     path: '/',
@@ -87,6 +92,21 @@ const Router = [
         path: '/schedules',
         exact: true,
         element: (<ProtectedRoute> <ScheduleList /> </ProtectedRoute>)
+      },
+      {
+        path: '/inventory',
+        exact: true,
+        element: (<ProtectedRoute> <InventoryList /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/create-inventory',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationInventory /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/update-inventory/:id',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationInventory /> </ProtectedRoute>)
       },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],

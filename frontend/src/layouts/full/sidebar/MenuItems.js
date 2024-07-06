@@ -1,4 +1,4 @@
-import { IconCalendar, IconLayoutDashboard, IconUser } from '@tabler/icons';
+import { IconBrandProducthunt, IconCalendar, IconFileInvoice, IconLayoutDashboard, IconUser } from '@tabler/icons';
 import { uniqueId } from 'lodash';
 import jwtUtils from '../../../api/jwtUtils';
 
@@ -59,6 +59,22 @@ const Menuitems = [
     title: 'Agenda',
     icon: IconCalendar,
     href: '/schedules'
+  },
+  {
+    navlabel: true,
+    subheader: 'Inventario y Facturación'
+  },
+  {
+    id: uniqueId(),
+    title: 'Inventario',
+    icon: IconBrandProducthunt,
+    href: '/inventory'
+  },
+  {
+    id: uniqueId(),
+    title: 'Facturación',
+    icon: IconFileInvoice,
+    href: '/invoice'
   }
 ];
 
