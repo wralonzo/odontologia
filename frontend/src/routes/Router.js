@@ -24,7 +24,7 @@ const ModificationCreationPatient = Loadable(lazy(() => import('../views/managem
 /* ****Citas y Agenda**** */
 const AppointmentList = Loadable(lazy(() => import('../views/management/appointment/AppointmentList')));
 const ModificationCreationAppointment = Loadable(lazy(() => import('../views/management/appointment/ModificationCreationAppointment')));
-const Schedule = Loadable(lazy(() => import('../views/management/schedule/Schedule')));
+const ScheduleCalendar = Loadable(lazy(() => import('../views/management/schedule/ScheduleCalendar')));
 /* ****** */
 
 /* ****Inventario y Facturación**** */
@@ -91,7 +91,7 @@ const Router = [
       {
         path: '/schedules',
         exact: true,
-        element: (<ProtectedRoute> <Schedule /> </ProtectedRoute>)
+        element: (<ProtectedRoute> <ScheduleCalendar /> </ProtectedRoute>)
       },
       {
         path: '/inventory',
