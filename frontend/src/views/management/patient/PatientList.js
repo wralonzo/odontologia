@@ -1,18 +1,4 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Button,
-  TableFooter,
-  TablePagination,
-  CircularProgress,
-  Typography,
-  Modal,
-  Box,
-  IconButton
-} from '@mui/material';
+import { Table, TableBody, TableCell, TableHead, TableRow, Button, TableFooter, TablePagination, CircularProgress, Typography, Modal, Box, IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { SERVIDOR } from '../../../api/Servidor';
@@ -27,7 +13,7 @@ const PatientList = () => {
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [clinicalHistory, setClinicalHistory] = useState([]);
-  const [setSelectedPatientId] = useState(null);
+  const [selectedPatientId, setSelectedPatientId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
