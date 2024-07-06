@@ -1,35 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-import { CircularProgress, Badge, styled } from '@mui/material';
+import { CircularProgress, Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from '@mui/material';
 import { SERVIDOR } from '../../../api/Servidor';
-import dayjs from 'dayjs';
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  '& .MuiBadge-dot': {
-    height: 12,
-    minWidth: 12,
-    borderRadius: '50%',
-    backgroundColor: 'red',
-  },
-}));
 
 const ScheduleCalendar = () => {
   const [schedules, setSchedules] = useState([]);
+  const [totalSchedules, setTotalSchedules] = useState(0);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchSchedules();
-  }, []);
+    fetchSchedules(page, rowsPerPage);
+  }, [page, rowsPerPage]);
 
-  const fetchSchedules = () => {
+  const fetchSchedules = (page, limit) => {
     const token = localStorage.getItem('token');
     setLoading(true);
     setError(null);
-    fetch(`${SERVIDOR}/api/schedule`, {
-      headers: { 'x-access-token': token },
+    fetch(`${SERVIDOR}/api/schedule?page=${page + 1}&limit=${limit}`, {
+      headers: { 'x-access-token': token }
     })
       .then((response) => {
         if (!response.ok) {
@@ -39,6 +29,7 @@ const ScheduleCalendar = () => {
       })
       .then((data) => {
         setSchedules(data.schedules || []);
+        setTotalSchedules(data.totalSchedules || 0);
         setLoading(false);
       })
       .catch((error) => {
@@ -46,6 +37,15 @@ const ScheduleCalendar = () => {
         setError('Error al obtener los horarios.');
         setLoading(false);
       });
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   if (loading) {
@@ -56,28 +56,37 @@ const ScheduleCalendar = () => {
     return <div>{error}</div>;
   }
 
-  const markedDays = schedules.map((schedule) => dayjs(schedule.date).format('YYYY-MM-DD'));
-
-  const renderDay = (date, _selectedDates, pickersDayProps) => {
-    const formattedDate = date.format('YYYY-MM-DD');
-    const isMarked = markedDays.includes(formattedDate);
-
-    return (
-      <StyledBadge
-        key={date.toString()}
-        overlap="circular"
-        variant="dot"
-        color={isMarked ? 'error' : 'primary'}
-      >
-        <div {...pickersDayProps}>{date.date()}</div>
-      </StyledBadge>
-    );
-  };
-
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateCalendar renderDay={renderDay} />
-    </LocalizationProvider>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Fecha</TableCell>
+          <TableCell>Nombre del Paciente</TableCell>
+          <TableCell>Motivo de la Cita</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {schedules.map((schedule) => (
+          <TableRow key={schedule.id}>
+            <TableCell>{schedule.date}</TableCell>
+            <TableCell>{schedule.appointment?.patient?.full_name}</TableCell>
+            <TableCell>{schedule.appointment?.reason}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 50]}
+            count={totalSchedules}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableRow>
+      </TableFooter>
+    </Table>
   );
 };
 
