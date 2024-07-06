@@ -17,13 +17,13 @@ const ModificationCreationInventory = () => {
 
   const handleSubmit = async () => {
     const itemDataToUpdate = {
-      id: itemId,
       name,
       description,
       quantity,
       price
     };
     if (isEditing) {
+      itemDataToUpdate.id = itemId; // Incluir el id solo en caso de edición
       return handleUpdate(parseInt(itemData.id), itemDataToUpdate);
     } else {
       return handleCreate(itemDataToUpdate);
@@ -79,7 +79,7 @@ const ModificationCreationInventory = () => {
       <Box maxWidth="500px" width="100%">
         <Paper elevation={3} sx={{ padding: 2 }}>
           <Typography variant="h5" align='center' mb={2} fontWeight={600}>
-            Agregar la información del artículo
+            {isEditing ? 'Actualizar información del artículo' : 'Agregar información del artículo'}
           </Typography>
           <Stack spacing={3}>
             <Box>
@@ -108,7 +108,7 @@ const ModificationCreationInventory = () => {
             </Box>
             <Box>
               <Button color="primary" variant="contained" size="large" fullWidth onClick={handleSubmit}>
-                Guardar
+                {isEditing ? 'Actualizar' : 'Guardar'}
               </Button>
             </Box>
           </Stack>
