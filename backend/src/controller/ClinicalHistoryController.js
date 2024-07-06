@@ -67,33 +67,21 @@ export const deleteLogicallyClinicalHistory = async (req, res, next) => {
   }
 };
 
-// Controlador - ClinicalHistoryController.js
-
 export const clinicalHistoryList = async (req, res, next) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
-    const numericLimit = parseInt(limit, 10);
-    const numericPage = parseInt(page, 10);
-    const offset = (numericPage - 1) * numericLimit;
     const { id: patient_id } = req.params;
     const whereClause = { status: true };
     if (patient_id) {
       whereClause.patient_id = patient_id;
     }
-    const totalRecords = await ClinicalHistory.count({ where: whereClause });
     const records = await ClinicalHistory.findAll({
       where: whereClause,
-      limit: numericLimit,
-      offset: offset
     });
-    const totalPages = Math.ceil(totalRecords / numericLimit);
     if (!records || (Array.isArray(records) && records.length === 0)) {
       return res.status(404).json({ message: 'No clinical history records found.' });
     }
     res.json({
-      totalRecords: totalRecords,
-      totalPages: totalPages,
-      currentPage: numericPage,
+      totalRecords: records.length,
       records: records
     });
   } catch (error) {
