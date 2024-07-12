@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.5.0",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
