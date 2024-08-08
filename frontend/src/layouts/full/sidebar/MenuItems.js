@@ -1,4 +1,4 @@
-import { IconBrandProducthunt, IconCalendar, IconLayoutDashboard, IconUser } from '@tabler/icons';
+import { IconCalendar, IconFile, IconLayoutDashboard, IconServicemark, IconUser } from '@tabler/icons';
 import { uniqueId } from 'lodash';
 import jwtUtils from '../../../api/jwtUtils';
 
@@ -62,12 +62,22 @@ const Menuitems = [
   },
   {
     navlabel: true,
+    subheader: 'Servicios'
+  },
+  {
+    id: uniqueId(),
+    title: 'Tratamientos',
+    icon: IconServicemark,
+    href: '/treatments'
+  },
+  {
+    navlabel: true,
     subheader: 'Inventario'
   },
   {
     id: uniqueId(),
     title: 'Inventario',
-    icon: IconBrandProducthunt,
+    icon: IconFile,
     href: '/inventory'
   }
 ];
