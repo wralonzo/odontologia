@@ -12,6 +12,8 @@ import Appointment from './src/model/Appointment.js';
 import Schedule from './src/model/Schedule.js';
 import ClinicalHistory from './src/model/ClinicalHistory.js';
 import Inventory from './src/model/Inventory.js';
+import MedicalImage from './src/model/MedicalImage.js';
+import TreatmentPlan from './src/model/TreatmentPlan.js';
 
 const sequelize = new Sequelize(bd, user, password, {
   host: host,
@@ -31,8 +33,10 @@ Patient.hasMany(Appointment, { foreignKey: 'patient_id' });
 Appointment.belongsTo(Patient, { foreignKey: 'patient_id' });
 Appointment.hasOne(Schedule, { foreignKey: 'appointment_id' });
 Schedule.belongsTo(Appointment, { foreignKey: 'appointment_id' });
-Patient.hasMany(ClinicalHistory, {foreignKey: 'patient_id'});
+Patient.hasMany(ClinicalHistory, { foreignKey: 'patient_id' });
 ClinicalHistory.belongsTo(Patient, { foreignKey: 'patient_id' });
+Patient.hasMany(MedicalImage, { foreignKey: 'patient_id' });
+MedicalImage.belongsTo(Patient, { foreignKey: 'patient_id' });
 
 (async () => {
   try {
@@ -48,6 +52,8 @@ ClinicalHistory.belongsTo(Patient, { foreignKey: 'patient_id' });
     await Schedule.sync();
     await ClinicalHistory.sync();
     await Inventory.sync();
+    await MedicalImage.sync();
+    await TreatmentPlan.sync();
     console.log('All tables have been created.');
   } catch (error) {
     console.error('Error creating tables:', error);
