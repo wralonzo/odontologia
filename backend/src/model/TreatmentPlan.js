@@ -1,6 +1,5 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import { bd, user, password, host, port } from '../database/database.js';
-import Patient from './Patient.js';
 
 const sequelize = new Sequelize(bd, user, password, {
   host: host,
