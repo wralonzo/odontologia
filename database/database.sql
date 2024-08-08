@@ -12,3 +12,5 @@ SELECT * FROM appointment;
 SELECT * FROM schedule;
 SELECT * FROM clinical_history;
 SELECT * FROM inventory;
+SELECT * FROM medical_image;
+SELECT * FROM treatment_plan;
