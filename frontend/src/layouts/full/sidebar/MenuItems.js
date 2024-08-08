@@ -62,7 +62,7 @@ const Menuitems = [
   },
   {
     navlabel: true,
-    subheader: 'Inventario y Facturación'
+    subheader: 'Inventario'
   },
   {
     id: uniqueId(),
