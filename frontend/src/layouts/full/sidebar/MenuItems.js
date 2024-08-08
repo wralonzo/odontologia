@@ -1,4 +1,4 @@
-import { IconBrandProducthunt, IconCalendar, IconFileInvoice, IconLayoutDashboard, IconUser } from '@tabler/icons';
+import { IconBrandProducthunt, IconCalendar, IconLayoutDashboard, IconUser } from '@tabler/icons';
 import { uniqueId } from 'lodash';
 import jwtUtils from '../../../api/jwtUtils';
 
@@ -69,12 +69,6 @@ const Menuitems = [
     title: 'Inventario',
     icon: IconBrandProducthunt,
     href: '/inventory'
-  },
-  {
-    id: uniqueId(),
-    title: 'Facturación',
-    icon: IconFileInvoice,
-    href: '/invoice'
   }
 ];
 
