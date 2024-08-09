@@ -75,7 +75,7 @@ const ModificationCreationTreatmentPlan = () => {
       <Box maxWidth="800px" width="100%">
         <Paper elevation={3} sx={{ padding: 2 }}>
           <Typography variant="h5" align='center' mb={2} fontWeight={600}>
-            {isEditing ? 'Actualizar información del tratamiento' : 'Agregar información del tratamiento'}
+            {isEditing ? 'Actualizar información del plan de tratamiento' : 'Agregar información del plan de tratamiento'}
           </Typography>
           <Stack spacing={3}>
             <Box>
