@@ -134,7 +134,6 @@ const PatientList = () => {
               <TableCell sx={{ fontSize: '15px' }}>Historial</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
-              <TableCell sx={{ fontSize: '15px' }}>Historial</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
