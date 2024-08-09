@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Box, Button, Paper, Stack, Typography } from '@mui/material';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 import { SERVIDOR } from '../../../api/Servidor';
-import { fontSize } from '@mui/system';
 
 const ModificationCreationTreatmentPlan = () => {
   const { state } = useLocation();
@@ -86,7 +85,7 @@ const ModificationCreationTreatmentPlan = () => {
                 component="label"
                 htmlFor="name"
                 mb="5px"
-                sx={{ fontSize: '18px' }}
+                sx={{ fontSize: '16px' }}
               >
                 Tratamiento
               </Typography>
@@ -95,7 +94,7 @@ const ModificationCreationTreatmentPlan = () => {
                 variant="outlined"
                 fullWidth value={planDetails}
                 onChange={(e) => setPlanDetails(e.target.value)}
-                sx={{ fontSize: '16px' }}
+                sx={{ fontSize: '15px' }}
               />
             </Box>
             <Box>
@@ -105,7 +104,7 @@ const ModificationCreationTreatmentPlan = () => {
                 component="label"
                 htmlFor="description"
                 mb="5px"
-                sx={{ fontSize: '18px' }}
+                sx={{ fontSize: '16px' }}
               >
                 Costo
               </Typography>
@@ -114,7 +113,7 @@ const ModificationCreationTreatmentPlan = () => {
                 variant="outlined"
                 fullWidth value={estimatedCost}
                 onChange={(e) => setEstimatedCost(e.target.value)}
-                sx={{ fontSize: '16px' }}
+                sx={{ fontSize: '15px' }}
               />
             </Box>
             <Box>
