@@ -4,12 +4,10 @@ import { Box, Button, Paper, Stack, Typography, Select, MenuItem, FormControl, I
 
 const ModificationCreationHealthQuestionnaire = () => {
   const { state } = useLocation();
-
-  // Recuperar el id y sexo del paciente desde el state
-  const patientId = state?.patientId || ''; // Recuperar el id del paciente
-  const patientSex = state?.sex || ''; // Recuperar el sexo del paciente
-
-  // Estados para las preguntas del cuestionario
+  const patientData = state?.patient || {};
+  const isPresentPatient = !!patientData.id;
+  const [patientId] = useState(isPresentPatient ? patientData.id : '');
+  const [patientSex] = useState(isPresentPatient ? patientData.sex : '');
   const [hypertension, setHypertension] = useState('');
   const [hypertensionControlled, setHypertensionControlled] = useState('');
   const [diabetes, setDiabetes] = useState('');
@@ -21,13 +19,11 @@ const ModificationCreationHealthQuestionnaire = () => {
   const [pregnant, setPregnant] = useState('');
   const [eatenLastSixHours, setEatenLastSixHours] = useState('');
   const [covidSymptoms, setCovidSymptoms] = useState('');
-
-  // Lógica para manejar la presentación de las preguntas
   const isFemale = patientSex === 'F';
 
   const handleSubmit = async () => {
     const questionnaireData = {
-      patientId, // Asegúrate de incluir el id del paciente en los datos enviados
+      patientId,
       hypertension,
       hypertensionControlled,
       diabetes,
@@ -35,14 +31,11 @@ const ModificationCreationHealthQuestionnaire = () => {
       hospitalized,
       allergic,
       excessiveBleeding,
-      sheIsPregnant: isFemale ? sheIsPregnant : null, // Enviar solo si es mujer
-      pregnant: isFemale ? pregnant : null, // Enviar solo si es mujer
+      sheIsPregnant: isFemale ? sheIsPregnant : null,
+      pregnant: isFemale ? pregnant : null,
       eatenLastSixHours,
       covidSymptoms,
     };
-
-    // Lógica para enviar los datos del cuestionario al backend
-    // Ejemplo: manejar creación o actualización según sea necesario
   };
 
   const renderSelect = (label, value, onChange) => (
@@ -77,11 +70,8 @@ const ModificationCreationHealthQuestionnaire = () => {
             {renderSelect('¿Ha estado hospitalizado en los últimos dos años?', hospitalized, setHospitalized)}
             {renderSelect('¿Es alérgico a la aspirina, penicilina u otra medicina?', allergic, setAllergic)}
             {renderSelect('¿Ha tenido alguna vez algún sangramiento excesivo?', excessiveBleeding, setExcessiveBleeding)}
-
-            {/* Mostrar preguntas sobre embarazo solo si el sexo es femenino */}
             {isFemale && renderSelect('¿Está embarazada? (solo si es mujer)', sheIsPregnant, setSheIsPregnant)}
             {isFemale && renderSelect('¿Está embarazada? (solo si es mujer)', pregnant, setPregnant)}
-
             {renderSelect('¿Ha comido algo en las últimas seis horas?', eatenLastSixHours, setEatenLastSixHours)}
             {renderSelect('¿Ha tenido síntomas como tos, fiebre, etc. en el último mes?', covidSymptoms, setCovidSymptoms)}
             <Box>
