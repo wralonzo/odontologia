@@ -98,19 +98,19 @@ const TreatmentPlanList = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Tratamiento</TableCell>
-              <TableCell>Costo</TableCell>
-              <TableCell>Editar</TableCell>
-              <TableCell>Eliminar</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>ID</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Tratamiento</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Costo</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {items.map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{item.id}</TableCell>
-                <TableCell>{item.plan_details}</TableCell>
-                <TableCell>{item.estimated_cost}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{item.id}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{item.plan_details}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{item.estimated_cost}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
