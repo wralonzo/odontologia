@@ -158,7 +158,7 @@ const PatientList = () => {
                     color="primary"
                     size="small"
                     onClick={() =>
-                      navigate(`/ui/update-patient/${patient.id}`, { state: { patient: patient } })
+                      navigate(`/ui/create-health-questionnaire/${patient.id}`, { state: { patient: patient } })
                     }
                   >
                     Cuestionario
