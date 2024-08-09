@@ -131,6 +131,7 @@ const PatientList = () => {
             <TableRow>
               <TableCell sx={{ fontSize: '15px' }}>ID</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Nombre Completo</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Historial</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Historial</TableCell>
@@ -141,6 +142,14 @@ const PatientList = () => {
               <TableRow key={patient.id}>
                 <TableCell sx={{ fontSize: '15px' }}>{patient.id}</TableCell>
                 <TableCell sx={{ fontSize: '15px' }}>{patient.full_name}</TableCell>
+                <TableCell>
+                  <IconButton
+                    color="primary"
+                    onClick={() => fetchClinicalHistory(patient.id)}
+                  >
+                    <PaperIcon />
+                  </IconButton>
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
@@ -162,14 +171,6 @@ const PatientList = () => {
                   >
                     Eliminar
                   </Button>
-                </TableCell>
-                <TableCell>
-                  <IconButton
-                    color="primary"
-                    onClick={() => fetchClinicalHistory(patient.id)}
-                  >
-                    <PaperIcon />
-                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
