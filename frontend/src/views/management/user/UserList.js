@@ -95,27 +95,27 @@ const UserList = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Apellido</TableCell>
-            <TableCell>Teléfono</TableCell>
-            <TableCell>Dirección</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Tipo de Usuario</TableCell>
-            <TableCell>Editar</TableCell>
-            <TableCell>Eliminar</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>ID</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>Nombre</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>Apellido</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>Teléfono</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>Dirección</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>Email</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>Tipo de Usuario</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {users.map((user) => (
             <TableRow key={user.id}>
-              <TableCell>{user.id}</TableCell>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.last_name}</TableCell>
-              <TableCell>{user.phone}</TableCell>
-              <TableCell>{user.address}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.type_of_user}</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>{user.id}</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>{user.name}</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>{user.last_name}</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>{user.phone}</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>{user.address}</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>{user.email}</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>{user.type_of_user}</TableCell>
               <TableCell>
                 <Button
                   variant="contained"

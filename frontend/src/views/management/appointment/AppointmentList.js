@@ -103,25 +103,25 @@ const AppointmentList = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Paciente</TableCell>
-              <TableCell>Fecha y Hora</TableCell>
-              <TableCell>Razón</TableCell>
-              <TableCell>Notas</TableCell>
-              <TableCell>Estado</TableCell>
-              <TableCell>Editar</TableCell>
-              <TableCell>Eliminar</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>ID</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Paciente</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Fecha y Hora</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Razón</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Notas</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Estado</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {appointments.map((appointment) => (
               <TableRow key={appointment.id}>
-                <TableCell>{appointment.id}</TableCell>
-                <TableCell>{appointment.patient.full_name}</TableCell>
-                <TableCell>{new Date(appointment.appointment_datetime).toLocaleString('es-ES', { timeZone: 'UTC' }).replace(',', '').replace(/:.. /, ' ')}</TableCell>
-                <TableCell>{appointment.reason}</TableCell>
-                <TableCell>{appointment.notes}</TableCell>
-                <TableCell>{appointment.state}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{appointment.id}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{appointment.patient.full_name}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{new Date(appointment.appointment_datetime).toLocaleString('es-ES', { timeZone: 'UTC' }).replace(',', '').replace(/:.. /, ' ')}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{appointment.reason}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{appointment.notes}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{appointment.state}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"

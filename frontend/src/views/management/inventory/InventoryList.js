@@ -98,21 +98,21 @@ const InventoryList = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Descripción</TableCell>
-              <TableCell>Cantidad</TableCell>
-              <TableCell>Editar</TableCell>
-              <TableCell>Eliminar</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>ID</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Nombre</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Descripción</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Cantidad</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {items.map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{item.id}</TableCell>
-                <TableCell>{item.item_name}</TableCell>
-                <TableCell>{item.description}</TableCell>
-                <TableCell>{item.quantity}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{item.id}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{item.item_name}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{item.description}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{item.quantity}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"

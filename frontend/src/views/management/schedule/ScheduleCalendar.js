@@ -60,17 +60,17 @@ const ScheduleCalendar = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>Fecha</TableCell>
-          <TableCell>Nombre del Paciente</TableCell>
-          <TableCell>Motivo de la Cita</TableCell>
+          <TableCell sx={{ fontSize: '15px' }}>Fecha</TableCell>
+          <TableCell sx={{ fontSize: '15px' }}>Nombre del Paciente</TableCell>
+          <TableCell sx={{ fontSize: '15px' }}>Motivo de la Cita</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {schedules.map((schedule) => (
           <TableRow key={schedule.id}>
-            <TableCell>{schedule.date}</TableCell>
-            <TableCell>{schedule.appointment?.patient?.full_name}</TableCell>
-            <TableCell>{schedule.appointment?.reason}</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>{schedule.date}</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>{schedule.appointment?.patient?.full_name}</TableCell>
+            <TableCell sx={{ fontSize: '15px' }}>{schedule.appointment?.reason}</TableCell>
           </TableRow>
         ))}
       </TableBody>

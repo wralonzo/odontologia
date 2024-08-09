@@ -129,28 +129,18 @@ const PatientList = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Nombre Completo</TableCell>
-              <TableCell>Dirección</TableCell>
-              <TableCell>Sexo</TableCell>
-              <TableCell>Fecha de nacimiento</TableCell>
-              <TableCell>Contacto de emergencia</TableCell>
-              <TableCell>Telefono de emergencia</TableCell>
-              <TableCell>Editar</TableCell>
-              <TableCell>Eliminar</TableCell>
-              <TableCell>Historial</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>ID</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Nombre Completo</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Historial</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {patients.map((patient) => (
               <TableRow key={patient.id}>
-                <TableCell>{patient.id}</TableCell>
-                <TableCell>{patient.full_name}</TableCell>
-                <TableCell>{patient.address}</TableCell>
-                <TableCell>{patient.sex}</TableCell>
-                <TableCell>{patient.birth_date}</TableCell>
-                <TableCell>{patient.emergency_contact}</TableCell>
-                <TableCell>{patient.emergency_phone}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{patient.id}</TableCell>
+                <TableCell sx={{ fontSize: '15px' }}>{patient.full_name}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
