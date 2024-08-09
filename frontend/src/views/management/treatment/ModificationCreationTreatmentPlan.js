@@ -85,7 +85,7 @@ const ModificationCreationTreatmentPlan = () => {
                 component="label"
                 htmlFor="name"
                 mb="5px"
-                sx={{ fontSize: '16px' }}
+                sx={{ fontSize: '15px' }}
               >
                 Tratamiento
               </Typography>
@@ -103,7 +103,7 @@ const ModificationCreationTreatmentPlan = () => {
                 component="label"
                 htmlFor="description"
                 mb="5px"
-                sx={{ fontSize: '16px' }}
+                sx={{ fontSize: '15px' }}
               >
                 Costo
               </Typography>
