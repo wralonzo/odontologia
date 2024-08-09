@@ -136,6 +136,7 @@ const PatientList = () => {
               <TableCell sx={{ fontSize: '15px' }}>Fecha de nacimiento</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Contacto de emergencia</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Telefono de emergencia</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Cuestionario</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Historial</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
@@ -151,6 +152,18 @@ const PatientList = () => {
                 <TableCell sx={{ fontSize: '15px' }}>{patient.birth_date}</TableCell>
                 <TableCell sx={{ fontSize: '15px' }}>{patient.emergency_contact}</TableCell>
                 <TableCell sx={{ fontSize: '15px' }}>{patient.emergency_phone}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() =>
+                      navigate(`/ui/update-patient/${patient.id}`, { state: { patient: patient } })
+                    }
+                  >
+                    Cuestionario
+                  </Button>
+                </TableCell>
                 <TableCell>
                   <IconButton
                     color="primary"
