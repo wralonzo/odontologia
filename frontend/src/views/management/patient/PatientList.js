@@ -136,9 +136,9 @@ const PatientList = () => {
               <TableCell sx={{ fontSize: '15px' }}>Fecha de nacimiento</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Contacto de emergencia</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Telefono de emergencia</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Historial</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
-              <TableCell sx={{ fontSize: '15px' }}>Historial</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -151,6 +151,14 @@ const PatientList = () => {
                 <TableCell sx={{ fontSize: '15px' }}>{patient.birth_date}</TableCell>
                 <TableCell sx={{ fontSize: '15px' }}>{patient.emergency_contact}</TableCell>
                 <TableCell sx={{ fontSize: '15px' }}>{patient.emergency_phone}</TableCell>
+                <TableCell>
+                  <IconButton
+                    color="primary"
+                    onClick={() => fetchClinicalHistory(patient.id)}
+                  >
+                    <PaperIcon />
+                  </IconButton>
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
@@ -172,14 +180,6 @@ const PatientList = () => {
                   >
                     Eliminar
                   </Button>
-                </TableCell>
-                <TableCell>
-                  <IconButton
-                    color="primary"
-                    onClick={() => fetchClinicalHistory(patient.id)}
-                  >
-                    <PaperIcon />
-                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
