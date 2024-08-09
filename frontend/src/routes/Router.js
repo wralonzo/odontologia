@@ -27,6 +27,11 @@ const ModificationCreationAppointment = Loadable(lazy(() => import('../views/man
 const ScheduleCalendar = Loadable(lazy(() => import('../views/management/schedule/ScheduleCalendar')));
 /* ****** */
 
+/* ****Servicios**** */
+const TreatmentPlanList = Loadable(lazy(() => import('../views/management/treatment/TreatmentPlanList')));
+const ModificationCreationTreatmentPlan = Loadable(lazy(() => import('../views/management/treatment/ModificationCreationTreatmentPlan')));
+/* ****** */
+
 /* ****Inventario y Facturación**** */
 const InventoryList = Loadable(lazy(() => import('../views/management/inventory/InventoryList')));
 const ModificationCreationInventory = Loadable(lazy(() => import('../views/management/inventory/ModificationCreationInventory')));
@@ -92,6 +97,21 @@ const Router = [
         path: '/schedules',
         exact: true,
         element: (<ProtectedRoute> <ScheduleCalendar /> </ProtectedRoute>)
+      },
+      {
+        path: '/treatments',
+        exact: true,
+        element: (<ProtectedRoute> <TreatmentPlanList /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/create-treatment-plan',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationTreatmentPlan /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/update-treatment-plan/:id',
+        exact: true,
+        element: (<ProtectedRoute> <ModificationCreationTreatmentPlan /> </ProtectedRoute>)
       },
       {
         path: '/inventory',

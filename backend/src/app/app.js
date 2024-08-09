@@ -8,6 +8,7 @@ import patientRoute from '../route/patientRoute.js'
 import appointmentScheduleRoute from '../route/appointmentScheduleRoute.js'
 import clinicalHistoryRoute from '../route/clinicalHistoryRoute.js'
 import inventoryRoute from '../route/inventoryRoute.js'
+import treatmentPlanRoute from '../route/treatmentPlanRoute.js'
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use('/api', patientRoute);
 app.use('/api', appointmentScheduleRoute);
 app.use('/api', clinicalHistoryRoute);
 app.use('/api', inventoryRoute);
+app.use('/api', treatmentPlanRoute);
 
 export default app; 

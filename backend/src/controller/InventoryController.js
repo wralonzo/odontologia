@@ -69,8 +69,8 @@ export const deleteLogicallyInventory = async (req, res, next) => {
 
 export const inventoryList = async (req, res, next) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
-    const numericLimit = parseInt(limit, 10);
+    const { page = 1, limit = 30 } = req.query;
+    const numericLimit = parseInt(limit, 30);
     const numericPage = parseInt(page, 10);
     const offset = (numericPage - 1) * numericLimit;
     const totalRecords = await Inventory.count({ where: { status: true } });
