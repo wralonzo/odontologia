@@ -72,26 +72,54 @@ const ModificationCreationTreatmentPlan = () => {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="flex-start" minHeight="100vh" mt={4}>
-      <Box maxWidth="500px" width="100%">
+      <Box maxWidth="800px" width="100%">
         <Paper elevation={3} sx={{ padding: 2 }}>
           <Typography variant="h5" align='center' mb={2} fontWeight={600}>
             {isEditing ? 'Actualizar información del tratamiento' : 'Agregar información del tratamiento'}
           </Typography>
           <Stack spacing={3}>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="name" mb="5px">
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                component="label"
+                htmlFor="name"
+                mb="5px"
+              >
                 Tratamiento
               </Typography>
-              <CustomTextField id="name" variant="outlined" fullWidth value={planDetails} onChange={(e) => setPlanDetails(e.target.value)} />
+              <CustomTextField
+                id="name"
+                variant="outlined"
+                fullWidth value={planDetails}
+                onChange={(e) => setPlanDetails(e.target.value)}
+              />
             </Box>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="description" mb="5px">
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                component="label"
+                htmlFor="description"
+                mb="5px"
+              >
                 Costo
               </Typography>
-              <CustomTextField id="description" variant="outlined" fullWidth value={estimatedCost} onChange={(e) => setEstimatedCost(e.target.value)} />
+              <CustomTextField
+                id="description"
+                variant="outlined"
+                fullWidth value={estimatedCost}
+                onChange={(e) => setEstimatedCost(e.target.value)}
+              />
             </Box>
             <Box>
-              <Button color="primary" variant="contained" size="large" fullWidth onClick={handleSubmit}>
+              <Button
+                color="primary"
+                variant="contained"
+                size="large"
+                fullWidth
+                onClick={handleSubmit}
+              >
                 {isEditing ? 'Actualizar' : 'Guardar'}
               </Button>
             </Box>
