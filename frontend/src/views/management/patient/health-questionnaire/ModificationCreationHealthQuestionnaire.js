@@ -1,11 +1,9 @@
-import { useLocation, useNavigate } from 'react-router';
-import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
+import React, { useState } from 'react';
 import { Box, Button, Paper, Stack, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { SERVIDOR } from '../../../api/Servidor';
 
 const ModificationCreationHealthQuestionnaire = () => {
   const { state } = useLocation();
-  const navigate = useNavigate();
 
   // Recuperar el id y sexo del paciente desde el state
   const patientId = state?.patientId || ''; // Recuperar el id del paciente
