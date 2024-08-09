@@ -80,50 +80,124 @@ const ModificationCreationPatient = () => {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="flex-start" minHeight="100vh" mt={4}>
-      <Box maxWidth="500px" width="100%">
+      <Box maxWidth="600px" width="100%">
         <Paper elevation={3} sx={{ padding: 2 }}>
           <Typography variant="h5" align='center' mb={2} fontWeight={600}>
             {isEditing ? 'Modificar información del paciente' : 'Agregar información del paciente'}
           </Typography>
           <Stack spacing={3}>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="fullName" mb="5px">
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                component="label"
+                htmlFor="fullName"
+                mb="5px"
+              >
                 Nombre Completo
               </Typography>
-              <CustomTextField id="fullName" variant="outlined" fullWidth value={fullName} onChange={(e) => setFullName(e.target.value)} />
+              <CustomTextField
+                id="fullName"
+                variant="outlined"
+                fullWidth
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
             </Box>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="address" mb="5px">
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                component="label"
+                htmlFor="address"
+                mb="5px"
+              >
                 Dirección
               </Typography>
-              <CustomTextField id="address" variant="outlined" fullWidth value={address} onChange={(e) => setAddress(e.target.value)} />
+              <CustomTextField
+                id="address"
+                variant="outlined"
+                fullWidth value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
             </Box>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="sex" mb="5px">
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                component="label"
+                htmlFor="sex"
+                mb="5px">
                 Sexo (M/F)
               </Typography>
-              <CustomTextField id="sex" variant="outlined" fullWidth value={sex} onChange={(e) => setSex(e.target.value.toUpperCase().slice(0, 1))} inputProps={{ maxLength: 1 }} />
+              <CustomTextField
+                id="sex"
+                variant="outlined"
+                fullWidth value={sex}
+                onChange={(e) => setSex(e.target.value.toUpperCase().slice(0, 1))}
+                inputProps={{ maxLength: 1 }}
+              />
             </Box>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="birthDate" mb="5px">
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                component="label"
+                htmlFor="birthDate"
+                mb="5px">
                 Fecha de Nacimiento
               </Typography>
-              <CustomTextField id="birthDate" variant="outlined" fullWidth value={birthDate} onChange={(e) => setBirthDate(e.target.value)} inputProps={{ type: 'date' }} />
+              <CustomTextField
+                id="birthDate"
+                variant="outlined"
+                fullWidth
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
+                inputProps={{ type: 'date' }} />
             </Box>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="emergencyContact" mb="5px">
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                component="label"
+                htmlFor="emergencyContact"
+                mb="5px"
+              >
                 Contacto de Emergencia
               </Typography>
-              <CustomTextField id="emergencyContact" variant="outlined" fullWidth value={emergencyContact} onChange={(e) => setEmergencyContact(e.target.value)} />
+              <CustomTextField
+                id="emergencyContact"
+                variant="outlined"
+                fullWidth
+                value={emergencyContact}
+                onChange={(e) => setEmergencyContact(e.target.value)}
+              />
             </Box>
             <Box>
-              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor="emergencyPhone" mb="5px">
+              <Typography
+                variant="subtitle1"
+                fontWeight={600}
+                component="label"
+                htmlFor="emergencyPhone"
+                mb="5px"
+              >
                 Teléfono de Emergencia
               </Typography>
-              <CustomTextField id="emergencyPhone" variant="outlined" fullWidth value={emergencyPhone} onChange={(e) => setEmergencyPhone(e.target.value)} />
+              <CustomTextField
+                id="emergencyPhone"
+                variant="outlined"
+                fullWidth value={emergencyPhone}
+                onChange={(e) => setEmergencyPhone(e.target.value)}
+              />
             </Box>
             <Box>
-              <Button color="primary" variant="contained" size="large" fullWidth onClick={handleSubmit}>
+              <Button
+                color="primary"
+                variant="contained"
+                size="large"
+                fullWidth
+                onClick={handleSubmit}
+              >
                 Guardar
               </Button>
             </Box>
