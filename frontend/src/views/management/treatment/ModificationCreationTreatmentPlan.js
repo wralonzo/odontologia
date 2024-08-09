@@ -10,8 +10,8 @@ const ModificationCreationTreatmentPlan = () => {
   const itemData = state?.item || {};
   const isEditing = !!itemData.id;
   const [itemId] = useState(isEditing ? itemData.id : '');
-  const [planDetails, setPlanDetails] = useState(isEditing ? itemData.item_name : '');
-  const [estimatedCost, setEstimatedCost] = useState(isEditing ? itemData.description : '');
+  const [planDetails, setPlanDetails] = useState(isEditing ? itemData.plan_details : '');
+  const [estimatedCost, setEstimatedCost] = useState(isEditing ? itemData.estimated_cost : '');
 
   const handleSubmit = async () => {
     const itemDataToUpdate = {
