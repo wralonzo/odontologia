@@ -94,7 +94,7 @@ const ModificationCreationTreatmentPlan = () => {
                 variant="outlined"
                 fullWidth value={planDetails}
                 onChange={(e) => setPlanDetails(e.target.value)}
-                sx={{ fontSize: '15px' }}
+                sx={{ fontSize: '16px' }}
               />
             </Box>
             <Box>
@@ -113,7 +113,7 @@ const ModificationCreationTreatmentPlan = () => {
                 variant="outlined"
                 fullWidth value={estimatedCost}
                 onChange={(e) => setEstimatedCost(e.target.value)}
-                sx={{ fontSize: '15px' }}
+                sx={{ fontSize: '16px' }}
               />
             </Box>
             <Box>
