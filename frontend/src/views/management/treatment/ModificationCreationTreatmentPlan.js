@@ -72,7 +72,7 @@ const ModificationCreationTreatmentPlan = () => {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="flex-start" minHeight="100vh" mt={4}>
-      <Box maxWidth="800px" width="100%">
+      <Box maxWidth="600px" width="100%">
         <Paper elevation={3} sx={{ padding: 2 }}>
           <Typography variant="h5" align='center' mb={2} fontWeight={600}>
             {isEditing ? 'Actualizar información del plan de tratamiento' : 'Agregar información del plan de tratamiento'}
@@ -94,7 +94,6 @@ const ModificationCreationTreatmentPlan = () => {
                 variant="outlined"
                 fullWidth value={planDetails}
                 onChange={(e) => setPlanDetails(e.target.value)}
-                sx={{ fontSize: '16px' }}
               />
             </Box>
             <Box>
@@ -113,7 +112,6 @@ const ModificationCreationTreatmentPlan = () => {
                 variant="outlined"
                 fullWidth value={estimatedCost}
                 onChange={(e) => setEstimatedCost(e.target.value)}
-                sx={{ fontSize: '16px' }}
               />
             </Box>
             <Box>
