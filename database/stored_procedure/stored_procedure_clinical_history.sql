@@ -17,6 +17,7 @@ BEGIN
         VALUES (p_patient_id, p_details, p_date, NOW(), NOW());
     COMMIT;
 END //
+DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE procedure_to_update_clinical_history(
@@ -43,6 +44,7 @@ BEGIN
         WHERE id = p_id;
     END IF;
 END //
+DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE procedure_to_delete_logically_clinical_history(
@@ -78,3 +80,4 @@ BEGIN
         END IF;
     END IF;
 END //
+DELIMITER ;

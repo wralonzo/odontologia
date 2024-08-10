@@ -22,6 +22,7 @@ BEGIN
 		VALUES (p_name, p_last_name, p_phone, p_address, p_email, p_password, p_type_of_user, NOW(), NOW());
 	COMMIT;
 END //
+DELIMITER ;
 
 # Procedure to update user
 DELIMITER //
@@ -57,6 +58,7 @@ BEGIN
         WHERE id = p_id;
     END IF;
 END //
+DELIMITER ;
 
 # Procedure to login user
 DELIMITER //
@@ -82,6 +84,7 @@ BEGIN
     END IF;
     SELECT v_user_id AS user_id, v_type_of_user AS type_of_user;    
 END //
+DELIMITER ;
 
 # Procedure to Delete logically user
 DELIMITER //
@@ -118,3 +121,4 @@ BEGIN
         END IF;
     END IF;
 END //
+DELIMITER ;

@@ -21,6 +21,7 @@ BEGIN
         VALUES (p_full_name, p_address, p_sex, p_birth_date, p_emergency_contact, p_emergency_phone, NOW(), NOW());
     COMMIT;
 END //
+DELIMITER ;
 
 # Procedure to update patient
 DELIMITER //
@@ -54,6 +55,7 @@ BEGIN
         WHERE id = p_id;
     END IF;
 END //
+DELIMITER ;
 
 # Procedure to Delete logically patient
 DELIMITER //
@@ -90,5 +92,4 @@ BEGIN
         END IF;
     END IF;
 END //
-
-# 
+DELIMITER ;

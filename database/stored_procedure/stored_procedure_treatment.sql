@@ -16,6 +16,7 @@ BEGIN
         VALUES (p_plan_details, p_estimated_cost, NOW(), NOW());
     COMMIT;
 END //
+DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE procedure_to_update_treatment_plan(
@@ -40,6 +41,7 @@ BEGIN
         WHERE id = p_id;
     END IF;
 END //
+DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE procedure_to_delete_logically_treatment_plan(
@@ -75,3 +77,4 @@ BEGIN
         END IF;
     END IF;
 END //
+DELIMITER ;

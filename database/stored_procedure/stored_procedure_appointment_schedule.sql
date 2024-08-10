@@ -23,6 +23,7 @@ BEGIN
         VALUES (DATE(p_appointment_datetime), NOW(), NOW(), v_appointment_id);        
     COMMIT;
 END //
+DELIMITER ;
 
 # Procedure to update appointment and schedule
 DELIMITER //
@@ -102,6 +103,7 @@ BEGIN
     END IF;
     COMMIT;
 END //
+DELIMITER ;
 
 # Procedure to Delete logically appointment and schedule
 DELIMITER //
@@ -149,3 +151,4 @@ BEGIN
         END IF;
     END IF;
 END //
+DELIMITER ;

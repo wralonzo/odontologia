@@ -17,6 +17,7 @@ BEGIN
         VALUES (p_item_name, p_quantity, p_description, NOW(), NOW());
     COMMIT;
 END //
+DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE procedure_to_update_inventory(
@@ -43,6 +44,7 @@ BEGIN
         WHERE id = p_id;
     END IF;
 END //
+DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE procedure_to_delete_logically_inventory(
@@ -78,3 +80,4 @@ BEGIN
         END IF;
     END IF;
 END //
+DELIMITER ;
