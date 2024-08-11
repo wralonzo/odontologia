@@ -1,76 +1,86 @@
 USE dentistry_system_database;
 
-DELIMITER // 
-CREATE PROCEDURE procedure_to_register_treatment_plan(
-    IN p_plan_details TEXT,
-    IN p_estimated_cost DECIMAL(10, 2)
+DELIMITER //
+CREATE PROCEDURE procedure_to_register_treatment(
+    IN p_treatment VARCHAR(255),
+    IN p_cost DECIMAL(10, 2),
+    IN p_date DATE,
+    IN p_patient_id INT
 )
 BEGIN 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error registering treatment plan item.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error registering treatment.';
     END;
     START TRANSACTION; 
-        INSERT INTO treatment_plan (plan_details, estimated_cost, createdAt, updatedAt)
-        VALUES (p_plan_details, p_estimated_cost, NOW(), NOW());
+        INSERT INTO treatment (
+            treatment, cost, date, createdAt, updatedAt, patient_id
+        ) VALUES (
+            p_treatment, p_cost, p_date, NOW(), NOW(), p_patient_id
+        );
     COMMIT;
 END //
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE procedure_to_update_treatment_plan(
+CREATE PROCEDURE procedure_to_update_treatment(
     IN p_id INT,
-    IN p_plan_details TEXT,
-    IN p_estimated_cost DECIMAL(10, 2)
+    IN p_treatment VARCHAR(255),
+    IN p_cost DECIMAL(10, 2),
+    IN p_date DATE,
+    IN p_patient_id INT
 )
 BEGIN 
     DECLARE v_existing_status BOOLEAN;
     SELECT IFNULL(status, TRUE) INTO v_existing_status
-    FROM treatment_plan
+    FROM treatment
     WHERE id = p_id;
     IF v_existing_status IS NULL THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'treatment plan item does not exist.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Treatment item does not exist.';
     ELSEIF v_existing_status = FALSE THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'treatment plan item exists but is logically deleted.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Treatment item exists but is logically deleted.';
     ELSE
-        UPDATE treatment_plan
-        SET plan_details = p_plan_details,
-            estimated_cost = p_estimated_cost,
-            updatedAt = NOW()
+        UPDATE treatment
+        SET 
+            treatment = p_treatment,
+            cost = p_cost,
+            date = p_date,
+            updatedAt = NOW(),
+            patient_id = p_patient_id
         WHERE id = p_id;
     END IF;
 END //
 DELIMITER ;
 
 DELIMITER //
-CREATE PROCEDURE procedure_to_delete_logically_treatment_plan(
+CREATE PROCEDURE procedure_to_delete_logically_treatment(
     IN p_id INT
 )
 BEGIN
-    DECLARE treatment_plan_exists INT;
-    DECLARE treatment_plan_status BOOLEAN;
+    DECLARE treatment_exists INT;
+    DECLARE treatment_status BOOLEAN;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error processing treatment plan logical deletion.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error processing treatment logical deletion.';
     END;
     SELECT COUNT(*)
-    INTO treatment_plan_exists
-    FROM treatment_plan
+    INTO treatment_exists
+    FROM treatment
     WHERE id = p_id;
-    IF treatment_plan_exists = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'treatment plan item does not exist.';
+    IF treatment_exists = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Treatment item does not exist.';
     ELSE
         SELECT status
-        INTO treatment_plan_status
-        FROM treatment_plan
+        INTO treatment_status
+        FROM treatment
         WHERE id = p_id;
-        IF treatment_plan_status = 0 THEN
-            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'treatment plan item has already been logically deleted.';
+        IF treatment_status = 0 THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Treatment item has already been logically deleted.';
         ELSE
             START TRANSACTION;
-                UPDATE treatment_plan
+                UPDATE treatment
                 SET status = false
                 WHERE id = p_id;
             COMMIT;
