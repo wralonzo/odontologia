@@ -22,6 +22,7 @@ const ModificationCreationHealthQuestionnaire = () => {
   const [eatenLastSixHours, setEatenLastSixHours] = useState(false);
   const [covidSymptoms, setCovidSymptoms] = useState(false);
   const [seriousIllnesses, setSeriousIllnesses] = useState('');
+  const [questionnaireExists, setQuestionnaireExists] = useState(false);
   const isFemale = patientSex === 'F';
 
   useEffect(() => {
@@ -50,8 +51,9 @@ const ModificationCreationHealthQuestionnaire = () => {
             setPregnant(data.pregnancy_months);
             setEatenLastSixHours(data.recent_meal);
             setCovidSymptoms(data.recent_symptoms);
+            setQuestionnaireExists(true);
           } else {
-            console.log('No Health Questionnaire record found. Ready to create a new one.');
+            setQuestionnaireExists(false);
           }
         } catch (error) {
           console.error('Error fetching Health Questionnaire:', error);
@@ -79,23 +81,35 @@ const ModificationCreationHealthQuestionnaire = () => {
       patient_id: patientId
     };
     try {
-      const response = await fetch(`${SERVIDOR}/api/health-questionnarie`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-access-token': token
-        },
-        body: JSON.stringify(questionnaireData),
-      });
+      let response;
+      if (questionnaireExists) {
+        response = await fetch(`${SERVIDOR}/api/health-questionnarie/${patientId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token
+          },
+          body: JSON.stringify(questionnaireData),
+        });
+      } else {
+        response = await fetch(`${SERVIDOR}/api/health-questionnarie`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token
+          },
+          body: JSON.stringify(questionnaireData),
+        });
+      }
       if (response.ok) {
-        alert('Cuestionario de salud registrado exitosamente.');
+        alert('Cuestionario de salud guardado exitosamente.');
         navigate('/patients');
       } else {
-        alert('Error al registrar el cuestionario de salud.');
+        alert('Error al guardar el cuestionario de salud.');
       }
     } catch (error) {
-      console.error('Error al enviar el cuestionario de salud:', error);
-      alert('Error al enviar el cuestionario de salud.');
+      console.error('Error al guardar el cuestionario de salud:', error);
+      alert('Error al guardar el cuestionario de salud.');
     }
   };
 
