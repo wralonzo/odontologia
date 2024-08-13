@@ -10,7 +10,7 @@ const CreationMedicalImage = () => {
   const isPresentPatient = !!patientData.id;
   const [patientId] = useState(isPresentPatient ? patientData.id : '');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
+  const [image_base_64, setImage] = useState(null);
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
@@ -20,7 +20,7 @@ const CreationMedicalImage = () => {
     const token = localStorage.getItem('token');
     const formData = new FormData();
     formData.append('description', description);
-    formData.append('image_base_64', image);
+    formData.append('image_base_64', image_base_64);
     formData.append('patient_id', patientId);
 
     try {
