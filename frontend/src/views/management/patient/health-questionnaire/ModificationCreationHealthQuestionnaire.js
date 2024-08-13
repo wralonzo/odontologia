@@ -40,7 +40,6 @@ const ModificationCreationHealthQuestionnaire = () => {
       recent_symptoms: covidSymptoms,
       patient_id: patientId
     };
-
     try {
       const response = await fetch(`${SERVIDOR}/api/health-questionnarie`, {
         method: 'POST',
