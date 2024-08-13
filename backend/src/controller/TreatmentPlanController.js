@@ -94,3 +94,21 @@ export const treatmentPlanList = async (req, res, next) => {
     res.status(500).send('Internal Server Error.');
   }
 };
+
+export const treatmentPlanListNotPage = async (req, res, next) => {
+  try {
+    const records = await TreatmentPlan.findAll({
+      where: { status: true }
+    });
+    if (!records || (Array.isArray(records) && records.length === 0)) {
+      return res.status(404).json({ message: 'No se encontraron registros de Planes de Tratamiento.' });
+    }
+    res.json({
+      totalTreatmentPlans: records.length,
+      records: records
+    });
+  } catch (error) {
+    console.error('Error al mostrar la lista de registros de Planes de Tratamiento', error);
+    res.status(500).send('Error Interno del Servidor.');
+  }
+};
