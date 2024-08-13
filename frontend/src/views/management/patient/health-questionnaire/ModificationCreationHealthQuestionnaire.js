@@ -9,34 +9,37 @@ const ModificationCreationHealthQuestionnaire = () => {
   const isPresentPatient = !!patientData.id;
   const [patientId] = useState(isPresentPatient ? patientData.id : '');
   const [patientSex] = useState(isPresentPatient ? patientData.sex : '');
-  const [hypertension, setHypertension] = useState('');
-  const [hypertensionControlled, setHypertensionControlled] = useState('');
-  const [diabetes, setDiabetes] = useState('');
-  const [diabetesControlled, setDiabetesControlled] = useState('');
-  const [hospitalized, setHospitalized] = useState('');
-  const [allergic, setAllergic] = useState('');
-  const [excessiveBleeding, setExcessiveBleeding] = useState('');
-  const [sheIsPregnant, setSheIsPregnant] = useState('');
+  const [hypertension, setHypertension] = useState(false);
+  const [hypertensionControlled, setHypertensionControlled] = useState(false);
+  const [diabetes, setDiabetes] = useState(false);
+  const [diabetesControlled, setDiabetesControlled] = useState(false);
+  const [hospitalized, setHospitalized] = useState(false);
+  const [allergic, setAllergic] = useState(false);
+  const [excessiveBleeding, setExcessiveBleeding] = useState(false);
+  const [sheIsPregnant, setSheIsPregnant] = useState(false);
   const [pregnant, setPregnant] = useState('');
-  const [eatenLastSixHours, setEatenLastSixHours] = useState('');
-  const [covidSymptoms, setCovidSymptoms] = useState('');
+  const [eatenLastSixHours, setEatenLastSixHours] = useState(false);
+  const [covidSymptoms, setCovidSymptoms] = useState(false);
+  const [seriousIllnesses, setSeriousIllnesses] = useState('');
   const isFemale = patientSex === 'F';
 
   const handleSubmit = async () => {
     const questionnaireData = {
       patientId,
-      hypertension: hypertension,
+      hypertension,
       hypertension_control: hypertensionControlled,
-      diabetes: diabetes,
+      diabetes,
       diabetes_control: diabetesControlled,
       hospitalization: hospitalized,
       medicine_allergy: allergic,
       bleeding: excessiveBleeding,
-      sheIsPregnant: isFemale ? sheIsPregnant : null,
-      pregnant: isFemale ? pregnant : null,
-      eatenLastSixHours,
-      covidSymptoms,
+      serious_illnesses: seriousIllnesses,
+      pregnancy: isFemale ? sheIsPregnant : null,
+      pregnancy_months: isFemale ? pregnant : null,
+      recent_meal: eatenLastSixHours,
+      recent_symptoms: covidSymptoms,
     };
+
     try {
       const response = await fetch(`${SERVIDOR}/health-questionnarie`, {
         method: 'POST',
@@ -60,8 +63,8 @@ const ModificationCreationHealthQuestionnaire = () => {
     <FormControl fullWidth variant="outlined">
       <InputLabel>{label}</InputLabel>
       <Select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        value={value ? 'SI' : 'NO'}
+        onChange={(e) => onChange(e.target.value === 'SI')}
         label={label}
       >
         <MenuItem value="SI">Sí</MenuItem>
@@ -88,6 +91,13 @@ const ModificationCreationHealthQuestionnaire = () => {
             {renderSelect('¿Ha estado hospitalizado en los últimos dos años?', hospitalized, setHospitalized)}
             {renderSelect('¿Es alérgico a la aspirina, penicilina u otra medicina?', allergic, setAllergic)}
             {renderSelect('¿Ha tenido alguna vez algún sangramiento excesivo?', excessiveBleeding, setExcessiveBleeding)}
+            <TextField
+              fullWidth
+              variant="outlined"
+              label="Indique las enfermedades serias que ha padecido o que padece"
+              value={seriousIllnesses}
+              onChange={(e) => setSeriousIllnesses(e.target.value)}
+            />
             {isFemale && (
               <>
                 {renderSelect('¿Está embarazada?', sheIsPregnant, setSheIsPregnant)}
