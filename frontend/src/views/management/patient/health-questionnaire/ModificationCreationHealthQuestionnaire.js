@@ -1,9 +1,10 @@
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import React, { useState } from 'react';
 import { Box, Button, Paper, Stack, Typography, Select, MenuItem, FormControl, InputLabel, TextField } from '@mui/material';
 import { SERVIDOR } from '../../../../api/Servidor';
 
 const ModificationCreationHealthQuestionnaire = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const patientData = state?.patient || {};
   const isPresentPatient = !!patientData.id;
@@ -51,6 +52,7 @@ const ModificationCreationHealthQuestionnaire = () => {
       });
       if (response.ok) {
         alert('Cuestionario de salud registrado exitosamente.');
+        navigate('/patients');
       } else {
         alert('Error al registrar el cuestionario de salud.');
       }
