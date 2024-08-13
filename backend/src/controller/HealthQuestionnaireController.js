@@ -131,3 +131,19 @@ export const deleteLogicallyHealthQuestionnaire = async (req, res, next) => {
     res.status(500).send('Internal Server Error.');
   }
 };
+
+export const findHealthQuestionnaireByPatientId = async (req, res, next) => {
+  try {
+    const { patient_id } = req.params;
+    const healthQuestionnaire = await HealthQuestionnaire.findOne({
+      where: { patient_id: patient_id }
+    });
+    if (!healthQuestionnaire) {
+      return res.status(404).json({ message: 'No se encontró un registro de Health Questionnaire para el patient_id proporcionado.' });
+    }
+    res.json(healthQuestionnaire);
+  } catch (error) {
+    console.error('Error al buscar el Health Questionnaire por patient_id.', error);
+    res.status(500).send('Internal Server Error.');
+  }
+};

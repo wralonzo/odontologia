@@ -1,6 +1,6 @@
 import express from 'express';
 import verifyToken from '../middleware/verifyToken.js';
-import { registerHealthQuestionnaire, updateHealthQuestionnaire, deleteLogicallyHealthQuestionnaire, healthQuestionnaireList } from '../controller/HealthQuestionnaireController.js';
+import { registerHealthQuestionnaire, updateHealthQuestionnaire, deleteLogicallyHealthQuestionnaire, findHealthQuestionnaireByPatientId } from '../controller/HealthQuestionnaireController.js';
 
 const router = express.Router();
 
@@ -12,5 +12,9 @@ router.put('/health-questionnarie/:id', verifyToken, updateHealthQuestionnaire);
 
 // ENDPOIN - DELETE HEALTH QUESTIONNARIE
 router.patch('/health-questionnarie', verifyToken, deleteLogicallyHealthQuestionnaire);
+
+// ENDPOIN - DELETE HEALTH QUESTIONNARIE
+router.get('/health-questionnarie/:patient_id', verifyToken, findHealthQuestionnaireByPatientId);
+
 
 export default router; 
