@@ -24,6 +24,7 @@ const ModificationCreationHealthQuestionnaire = () => {
   const [seriousIllnesses, setSeriousIllnesses] = useState('');
   const [questionnaireExists, setQuestionnaireExists] = useState(false);
   const isFemale = patientSex === 'F';
+  const [questionnaireId, setQuestionnaireId] = useState(null);
 
   useEffect(() => {
     const fetchHealthQuestionnaire = async () => {
@@ -52,6 +53,7 @@ const ModificationCreationHealthQuestionnaire = () => {
             setEatenLastSixHours(data.recent_meal);
             setCovidSymptoms(data.recent_symptoms);
             setQuestionnaireExists(true);
+            setQuestionnaireId(data.id);
           } else {
             setQuestionnaireExists(false);
           }
@@ -66,6 +68,7 @@ const ModificationCreationHealthQuestionnaire = () => {
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
     const questionnaireData = {
+      id: questionnaireId || null,
       hypertension,
       hypertension_control: hypertensionControlled,
       diabetes,
@@ -83,7 +86,7 @@ const ModificationCreationHealthQuestionnaire = () => {
     try {
       let response;
       if (questionnaireExists) {
-        response = await fetch(`${SERVIDOR}/api/health-questionnarie/${patientId}`, {
+        response = await fetch(`${SERVIDOR}/api/health-questionnarie/${questionnaireId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
