@@ -41,7 +41,7 @@ const ModificationCreationHealthQuestionnaire = () => {
     };
 
     try {
-      const response = await fetch(`${SERVIDOR}/health-questionnarie`, {
+      const response = await fetch(`${SERVIDOR}/api/health-questionnarie`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
