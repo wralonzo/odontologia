@@ -20,6 +20,7 @@ const ModificationCreationUser = Loadable(lazy(() => import('../views/management
 const PatientList = Loadable(lazy(() => import('../views/management/patient/PatientList')));
 const ModificationCreationPatient = Loadable(lazy(() => import('../views/management/patient/ModificationCreationPatient')));
 const ModificationCreationHealthQuestionnaire = Loadable(lazy(() => import('../views/management/patient/health-questionnaire/ModificationCreationHealthQuestionnaire')));
+const CreationPhysicalEvaluation = Loadable(lazy(() => import('../views/management/patient/physical-evaluation/CreationPhysicalEvaluation')));
 /* ****** */
 
 /* ****Citas y Agenda**** */
@@ -83,6 +84,11 @@ const Router = [
         path: '/ui/create-health-questionnaire/:id',
         exact: true,
         element: (<ProtectedRoute> <ModificationCreationHealthQuestionnaire /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/create-physical-evaluation/:id',
+        exact: true,
+        element: (<ProtectedRoute> <CreationPhysicalEvaluation /> </ProtectedRoute>)
       },
       {
         path: '/appointments',

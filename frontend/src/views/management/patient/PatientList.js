@@ -175,7 +175,7 @@ const PatientList = () => {
                     color="primary"
                     size="small"
                     onClick={() =>
-                      navigate(`/ui/create-health-questionnaire/${patient.id}`, { state: { patient: patient } })
+                      navigate(`/ui/create-physical-evaluation/${patient.id}`, { state: { patient: patient } })
                     }
                   >
                     Fisica
