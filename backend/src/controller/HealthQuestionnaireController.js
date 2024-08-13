@@ -103,35 +103,6 @@ export const updateHealthQuestionnaire = async (req, res, next) => {
   }
 };
 
-export const deleteLogicallyHealthQuestionnaire = async (req, res, next) => {
-  const transaction = await sequelize.transaction();
-  try {
-    const { id } = req.body;
-
-    const existingHealthQuestionnaire = await HealthQuestionnaire.findByPk(id);
-    if (!existingHealthQuestionnaire) {
-      await transaction.rollback();
-      return res.status(404).json({ message: 'Health Questionnaire record does not exist.' });
-    }
-    if (!existingHealthQuestionnaire.status) {
-      await transaction.rollback();
-      return res.status(400).json({ message: 'Health Questionnaire record has already been logically deleted.' });
-    }
-
-    await sequelize.query('CALL procedure_to_delete_logically_health_questionnaire(:id)', {
-      replacements: { id: id },
-      transaction: transaction
-    });
-
-    await transaction.commit();
-    res.status(200).json({ message: 'Health Questionnaire record logically deleted successfully.' });
-  } catch (error) {
-    await transaction.rollback();
-    console.error('Error deleting Health Questionnaire logically.', error);
-    res.status(500).send('Internal Server Error.');
-  }
-};
-
 export const findHealthQuestionnaireByPatientId = async (req, res, next) => {
   try {
     const { patient_id } = req.params;

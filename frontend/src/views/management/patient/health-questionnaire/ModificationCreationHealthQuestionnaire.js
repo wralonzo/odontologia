@@ -38,9 +38,20 @@ const ModificationCreationHealthQuestionnaire = () => {
           });
           if (response.ok) {
             const data = await response.json();
-            console.log('Health Questionnaire:', data);
+            setHypertension(data.hypertension);
+            setHypertensionControlled(data.hypertension_control);
+            setDiabetes(data.diabetes);
+            setDiabetesControlled(data.diabetes_control);
+            setHospitalized(data.hospitalization);
+            setAllergic(data.medicine_allergy);
+            setExcessiveBleeding(data.bleeding);
+            setSeriousIllnesses(data.serious_illnesses);
+            setSheIsPregnant(data.pregnancy);
+            setPregnant(data.pregnancy_months);
+            setEatenLastSixHours(data.recent_meal);
+            setCovidSymptoms(data.recent_symptoms);
           } else {
-            console.log('No Health Questionnaire record found.');
+            console.log('No Health Questionnaire record found. Ready to create a new one.');
           }
         } catch (error) {
           console.error('Error fetching Health Questionnaire:', error);
