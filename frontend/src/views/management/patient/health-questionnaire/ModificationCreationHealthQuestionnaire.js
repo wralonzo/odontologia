@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Paper, Stack, Typography, Select, MenuItem, FormControl, InputLabel, TextField } from '@mui/material';
 import { SERVIDOR } from '../../../../api/Servidor';
 
@@ -23,6 +23,32 @@ const ModificationCreationHealthQuestionnaire = () => {
   const [covidSymptoms, setCovidSymptoms] = useState(false);
   const [seriousIllnesses, setSeriousIllnesses] = useState('');
   const isFemale = patientSex === 'F';
+
+  useEffect(() => {
+    const fetchHealthQuestionnaire = async () => {
+      if (patientId) {
+        try {
+          const token = localStorage.getItem('token');
+          const response = await fetch(`${SERVIDOR}/api/health-questionnarie/${patientId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': token
+            }
+          });
+          if (response.ok) {
+            const data = await response.json();
+            console.log('Health Questionnaire:', data);
+          } else {
+            console.log('No Health Questionnaire record found.');
+          }
+        } catch (error) {
+          console.error('Error fetching Health Questionnaire:', error);
+        }
+      }
+    };
+    fetchHealthQuestionnaire();
+  }, [patientId]);
 
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
