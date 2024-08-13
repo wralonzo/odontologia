@@ -83,39 +83,3 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
-
-DELIMITER //
-CREATE PROCEDURE procedure_to_delete_logically_health_questionnaire(
-    IN p_id INT
-)
-BEGIN
-    DECLARE health_questionnaire_exists INT;
-    DECLARE health_questionnaire_status BOOLEAN;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error processing health questionnaire logical deletion.';
-    END;
-    SELECT COUNT(*)
-    INTO health_questionnaire_exists
-    FROM health_questionnaire
-    WHERE id = p_id;
-    IF health_questionnaire_exists = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Health questionnaire item does not exist.';
-    ELSE
-        SELECT status
-        INTO health_questionnaire_status
-        FROM health_questionnaire
-        WHERE id = p_id;
-        IF health_questionnaire_status = 0 THEN
-            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Health questionnaire item has already been logically deleted.';
-        ELSE
-            START TRANSACTION;
-                UPDATE health_questionnaire
-                SET status = false
-                WHERE id = p_id;
-            COMMIT;
-        END IF;
-    END IF;
-END //
-DELIMITER ;

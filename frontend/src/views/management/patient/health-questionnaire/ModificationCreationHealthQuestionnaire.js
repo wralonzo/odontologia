@@ -152,7 +152,7 @@ const ModificationCreationHealthQuestionnaire = () => {
               fullWidth
               variant="outlined"
               label="Indique las enfermedades serias que ha padecido o que padece"
-              value={seriousIllnesses}
+              value={seriousIllnesses || ''}
               onChange={(e) => setSeriousIllnesses(e.target.value)}
             />
             {isFemale && (
