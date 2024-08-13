@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router';
 import React, { useState } from 'react';
-import { Box, Button, Paper, Stack, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Box, Button, Paper, Stack, Typography, Select, MenuItem, FormControl, InputLabel, TextField } from '@mui/material';
+import { SERVIDOR } from '../../../../api/Servidor';
 
 const ModificationCreationHealthQuestionnaire = () => {
   const { state } = useLocation();
@@ -24,20 +25,20 @@ const ModificationCreationHealthQuestionnaire = () => {
   const handleSubmit = async () => {
     const questionnaireData = {
       patientId,
-      hypertension,
-      hypertensionControlled,
-      diabetes,
-      diabetesControlled,
-      hospitalized,
-      allergic,
-      excessiveBleeding,
+      hypertension: hypertension,
+      hypertension_control: hypertensionControlled,
+      diabetes: diabetes,
+      diabetes_control: diabetesControlled,
+      hospitalization: hospitalized,
+      medicine_allergy: allergic,
+      bleeding: excessiveBleeding,
       sheIsPregnant: isFemale ? sheIsPregnant : null,
       pregnant: isFemale ? pregnant : null,
       eatenLastSixHours,
       covidSymptoms,
     };
     try {
-      const response = await fetch('/api/health-questionnaire/register', {
+      const response = await fetch(`${SERVIDOR}/health-questionnarie`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,8 +88,25 @@ const ModificationCreationHealthQuestionnaire = () => {
             {renderSelect('¿Ha estado hospitalizado en los últimos dos años?', hospitalized, setHospitalized)}
             {renderSelect('¿Es alérgico a la aspirina, penicilina u otra medicina?', allergic, setAllergic)}
             {renderSelect('¿Ha tenido alguna vez algún sangramiento excesivo?', excessiveBleeding, setExcessiveBleeding)}
-            {isFemale && renderSelect('¿Está embarazada? (solo si es mujer)', sheIsPregnant, setSheIsPregnant)}
-            {isFemale && renderSelect('¿Está embarazada? (solo si es mujer)', pregnant, setPregnant)}
+            {isFemale && (
+              <>
+                {renderSelect('¿Está embarazada?', sheIsPregnant, setSheIsPregnant)}
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  label="¿Cuántos meses de embarazo?"
+                  type="number"
+                  value={pregnant}
+                  onChange={(e) => setPregnant(e.target.value)}
+                  InputProps={{
+                    inputProps: {
+                      min: 0,
+                      max: 9,
+                    },
+                  }}
+                />
+              </>
+            )}
             {renderSelect('¿Ha comido algo en las últimas seis horas?', eatenLastSixHours, setEatenLastSixHours)}
             {renderSelect('¿Ha tenido síntomas como tos, fiebre, etc. en el último mes?', covidSymptoms, setCovidSymptoms)}
             <Box>

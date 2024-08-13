@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, Button, TableFooter, 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { SERVIDOR } from '../../../api/Servidor';
-import PaperIcon from '@mui/icons-material/Description'; // Ícono de papel
+import PaperIcon from '@mui/icons-material/Description';
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
