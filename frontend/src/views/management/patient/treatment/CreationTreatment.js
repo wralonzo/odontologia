@@ -38,6 +38,17 @@ const CreationTreatment = () => {
     fetchTreatments();
   }, []);
 
+  const handleTreatmentChange = (event) => {
+    const selectedTreatment = event.target.value;
+    setTreatment(selectedTreatment);
+
+    // Find the selected treatment's cost
+    const selectedTreatmentData = treatmentsList.find(t => t.plan_details === selectedTreatment);
+    if (selectedTreatmentData) {
+      setCost(selectedTreatmentData.estimated_cost);
+    }
+  };
+
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
     const evaluationData = {
@@ -74,7 +85,7 @@ const CreationTreatment = () => {
       <InputLabel>Tratamiento</InputLabel>
       <Select
         value={treatment}
-        onChange={(e) => setTreatment(e.target.value)}
+        onChange={handleTreatmentChange}
         label="Tratamiento"
       >
         {treatmentsList.map((treatmentOption) => (
@@ -106,6 +117,7 @@ const CreationTreatment = () => {
               value={cost}
               onChange={(e) => setCost(e.target.value)}
               InputProps={{
+                readOnly: true, // Make the cost field read-only
                 inputProps: { min: 0 },
               }}
             />
