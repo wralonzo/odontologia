@@ -24,6 +24,7 @@ const ModificationCreationHealthQuestionnaire = () => {
   const isFemale = patientSex === 'F';
 
   const handleSubmit = async () => {
+    const token = localStorage.getItem('token');
     const questionnaireData = {
       hypertension,
       hypertension_control: hypertensionControlled,
@@ -45,6 +46,7 @@ const ModificationCreationHealthQuestionnaire = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-access-token': token
         },
         body: JSON.stringify(questionnaireData),
       });
