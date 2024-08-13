@@ -1,6 +1,6 @@
 import express from 'express';
 import verifyToken from '../middleware/verifyToken.js';
-import { registerHealthQuestionnaire, updateHealthQuestionnaire, deleteLogicallyHealthQuestionnaire, findHealthQuestionnaireByPatientId } from '../controller/HealthQuestionnaireController.js';
+import { registerHealthQuestionnaire, updateHealthQuestionnaire, findHealthQuestionnaireByPatientId } from '../controller/HealthQuestionnaireController.js';
 
 const router = express.Router();
 
