@@ -39,7 +39,6 @@ export const registerHealthQuestionnaire = async (req, res, next) => {
       },
       transaction: transaction
     });
-
     await transaction.commit();
     res.json({ message: 'Health Questionnaire registered successfully.' });
   } catch (error) {
