@@ -13,7 +13,6 @@ const CreationPhysicalEvaluation = () => {
   const [bloodSugar, setBloodSugar] = useState('');
   const [lastTreatment, setLastTreatment] = useState('');
   const [otherData, setOtherData] = useState('');
-  const [status, setStatus] = useState(true);
 
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
@@ -22,7 +21,7 @@ const CreationPhysicalEvaluation = () => {
       blood_sugar: bloodSugar,
       last_treatment: lastTreatment,
       other_data: otherData,
-      status: status
+      patient_id: patientId
     };
 
     try {
@@ -37,7 +36,7 @@ const CreationPhysicalEvaluation = () => {
 
       if (response.ok) {
         alert('Evaluación física guardada exitosamente.');
-        navigate('/evaluations');
+        navigate('/patients');
       } else {
         alert('Error al guardar la evaluación física.');
       }
