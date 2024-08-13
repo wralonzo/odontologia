@@ -1,6 +1,6 @@
 import express from 'express';
 import verifyToken from '../middleware/verifyToken.js';
-import { registerTreatmentPlan, updateTreatmentPlan, deleteLogicallyTreatmentPlan, treatmentPlanList } from '../controller/TreatmentPlanController.js';
+import { registerTreatmentPlan, updateTreatmentPlan, deleteLogicallyTreatmentPlan, treatmentPlanList, treatmentPlanListNotPage } from '../controller/TreatmentPlanController.js';
 
 const router = express.Router();
 
@@ -15,5 +15,8 @@ router.patch('/treatment-plan', verifyToken, deleteLogicallyTreatmentPlan);
 
 // ENDPOINT - TREATMENT PLAN LIST
 router.get('/treatment-plan', verifyToken, treatmentPlanList);
+
+// ENDPOINT - TREATMENT PLAN LIST NOT PAGE
+router.get('/treatment-plan-not-page', verifyToken, treatmentPlanListNotPage);
 
 export default router; 
