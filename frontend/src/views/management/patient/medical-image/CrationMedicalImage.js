@@ -10,17 +10,24 @@ const CreationMedicalImage = () => {
   const isPresentPatient = !!patientData.id;
   const [patientId] = useState(isPresentPatient ? patientData.id : '');
   const [description, setDescription] = useState('');
-  const [image_base_64, setImage] = useState(null);
+  const [imageBase64, setImageBase64] = useState(null);
 
   const handleImageChange = (event) => {
-    setImage(event.target.files[0]);
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageBase64(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
     const formData = new FormData();
     formData.append('description', description);
-    formData.append('image_base_64', image_base_64);
+    formData.append('image_base_64', imageBase64);
     formData.append('patient_id', patientId);
 
     try {
