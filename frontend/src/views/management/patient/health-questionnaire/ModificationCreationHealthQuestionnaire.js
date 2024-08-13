@@ -36,6 +36,23 @@ const ModificationCreationHealthQuestionnaire = () => {
       eatenLastSixHours,
       covidSymptoms,
     };
+    try {
+      const response = await fetch('/api/health-questionnaire/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(questionnaireData),
+      });
+      if (response.ok) {
+        alert('Cuestionario de salud registrado exitosamente.');
+      } else {
+        alert('Error al registrar el cuestionario de salud.');
+      }
+    } catch (error) {
+      console.error('Error al enviar el cuestionario de salud:', error);
+      alert('Error al enviar el cuestionario de salud.');
+    }
   };
 
   const renderSelect = (label, value, onChange) => (
