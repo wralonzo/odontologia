@@ -13,7 +13,4 @@ router.put('/health-questionnarie/:id', verifyToken, updateHealthQuestionnaire);
 // ENDPOIN - DELETE HEALTH QUESTIONNARIE
 router.patch('/health-questionnarie', verifyToken, deleteLogicallyHealthQuestionnaire);
 
-// ENDPOINT - HEALTH QUESTIONNARIE LIST
-router.get('/health-questionnarie', verifyToken, healthQuestionnaireList);
-
 export default router; 

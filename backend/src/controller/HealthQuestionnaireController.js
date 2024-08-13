@@ -131,31 +131,3 @@ export const deleteLogicallyHealthQuestionnaire = async (req, res, next) => {
     res.status(500).send('Internal Server Error.');
   }
 };
-
-export const healthQuestionnaireList = async (req, res, next) => {
-  try {
-    const { page = 1, limit = 30 } = req.query;
-    const numericLimit = parseInt(limit, 10);
-    const numericPage = parseInt(page, 10);
-    const offset = (numericPage - 1) * numericLimit;
-    const totalHealthQuestionnaires = await HealthQuestionnaire.count({ where: { status: true } });
-    const records = await HealthQuestionnaire.findAll({
-      where: { status: true },
-      limit: numericLimit,
-      offset: offset
-    });
-    const totalPages = Math.ceil(totalHealthQuestionnaires / numericLimit);
-    if (!records || (Array.isArray(records) && records.length === 0)) {
-      return res.status(404).json({ message: 'No Health Questionnaire records found.' });
-    }
-    res.json({
-      totalHealthQuestionnaires: totalHealthQuestionnaires,
-      totalPages: totalPages,
-      currentPage: numericPage,
-      records: records
-    });
-  } catch (error) {
-    console.error('Error when displaying the list of Health Questionnaire records', error);
-    res.status(500).send('Internal Server Error.');
-  }
-};
