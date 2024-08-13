@@ -166,7 +166,7 @@ const PatientList = () => {
                       navigate(`/ui/create-health-questionnaire/${patient.id}`, { state: { patient: patient } })
                     }
                   >
-                    Cuestionario
+                    Salud
                   </Button>
                 </TableCell>
                 <TableCell>
