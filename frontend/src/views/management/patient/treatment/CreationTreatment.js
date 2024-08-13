@@ -59,7 +59,7 @@ const CreationTreatment = () => {
     };
 
     try {
-      const response = await fetch(`${SERVIDOR}/api/physical-evaluation`, {
+      const response = await fetch(`${SERVIDOR}/api/treatment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
