@@ -13,5 +13,4 @@ router.put('/health-questionnarie/:id', verifyToken, updateHealthQuestionnaire);
 // ENDPOIN - FIND ONE HEALTH QUESTIONNARIE
 router.get('/health-questionnarie/:patient_id', verifyToken, findHealthQuestionnaireByPatientId);
 
-
 export default router; 
