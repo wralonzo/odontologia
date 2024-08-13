@@ -8,6 +8,7 @@ import patientRoute from '../route/patientRoute.js'
 import healthQuestionnaireRoute from '../route/healthQuestionnaireRoute.js'
 import physicalEvaluationRoute from '../route/physicalEvaluationRoute.js'
 import treatmentRoute from '../route/treatmentRoute.js'
+import medicalImageRoute from '../route/medicalImageRoute.js'
 import appointmentScheduleRoute from '../route/appointmentScheduleRoute.js'
 import clinicalHistoryRoute from '../route/clinicalHistoryRoute.js'
 import inventoryRoute from '../route/inventoryRoute.js'
@@ -26,6 +27,7 @@ app.use('/api', patientRoute);
 app.use('/api', healthQuestionnaireRoute);
 app.use('/api', physicalEvaluationRoute);
 app.use('/api', treatmentRoute);
+app.use('/api', medicalImageRoute);
 app.use('/api', appointmentScheduleRoute);
 app.use('/api', clinicalHistoryRoute);
 app.use('/api', inventoryRoute);
