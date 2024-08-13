@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router';
-import React, { useState } from 'react';
-import { Box, Button, Paper, Stack, Typography, TextField } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Button, Paper, Stack, Typography, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { SERVIDOR } from '../../../../api/Servidor';
 
 const CreationTreatment = () => {
@@ -9,18 +9,43 @@ const CreationTreatment = () => {
   const patientData = state?.patient || {};
   const isPresentPatient = !!patientData.id;
   const [patientId] = useState(isPresentPatient ? patientData.id : '');
-  const [bloodPressure, setBloodPressure] = useState('');
-  const [bloodSugar, setBloodSugar] = useState('');
-  const [lastTreatment, setLastTreatment] = useState('');
-  const [otherData, setOtherData] = useState('');
+  const [treatment, setTreatment] = useState('');
+  const [cost, setCost] = useState('');
+  const [date, setDate] = useState('');
+  const [treatmentsList, setTreatmentsList] = useState([]);
+
+  useEffect(() => {
+    const fetchTreatments = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${SERVIDOR}/api/treatment-plan-not-page`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setTreatmentsList(data.records);
+          console.log(data.records);
+
+        } else {
+          alert('Error al obtener la lista de tratamientos.');
+        }
+      } catch (error) {
+        console.error('Error al obtener la lista de tratamientos:', error);
+      }
+    };
+    fetchTreatments();
+  }, []);
 
   const handleSubmit = async () => {
     const token = localStorage.getItem('token');
     const evaluationData = {
-      blood_pressure: bloodPressure,
-      blood_sugar: bloodSugar,
-      last_treatment: lastTreatment,
-      other_data: otherData,
+      treatment,
+      cost: parseFloat(cost),
+      date,
       patient_id: patientId
     };
 
@@ -46,44 +71,56 @@ const CreationTreatment = () => {
     }
   };
 
+  const renderSelectTreatment = () => (
+    <FormControl fullWidth variant="outlined">
+      <InputLabel>Tratamiento</InputLabel>
+      <Select
+        value={treatment}
+        onChange={(e) => setTreatment(e.target.value)}
+        label="Tratamiento"
+      >
+        {treatmentsList.map((treatmentOption) => (
+          <MenuItem key={treatmentOption.id} value={treatmentOption.treatment}>
+            {treatmentOption.treatment}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
+
   return (
     <Box display="flex" justifyContent="center" alignItems="flex-start" minHeight="100vh" mt={4}>
       <Box maxWidth="600px" width="100%">
         <Paper elevation={3} sx={{ padding: 2 }}>
           <Typography variant="h5" align='center' mb={2} fontWeight={600}>
-            Evaluación Física
+            Tratamiento
           </Typography>
           <Stack spacing={3}>
             <Typography variant="subtitle1" align='center' fontWeight={600}>
               Por favor complete todos los campos
             </Typography>
+            {renderSelectTreatment()}
             <TextField
               fullWidth
               variant="outlined"
-              label="Presión Arterial"
-              value={bloodPressure}
-              onChange={(e) => setBloodPressure(e.target.value)}
+              label="Costo"
+              type="number"
+              value={cost}
+              onChange={(e) => setCost(e.target.value)}
+              InputProps={{
+                inputProps: { min: 0 },
+              }}
             />
             <TextField
               fullWidth
               variant="outlined"
-              label="Nivel de Azúcar en Sangre"
-              value={bloodSugar}
-              onChange={(e) => setBloodSugar(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              variant="outlined"
-              label="Último Tratamiento"
-              value={lastTreatment}
-              onChange={(e) => setLastTreatment(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              variant="outlined"
-              label="Otros Datos"
-              value={otherData}
-              onChange={(e) => setOtherData(e.target.value)}
+              label="Fecha"
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
             <Box>
               <Button

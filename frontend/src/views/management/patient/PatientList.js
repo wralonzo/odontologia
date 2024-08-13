@@ -140,6 +140,7 @@ const PatientList = () => {
               */}
               <TableCell sx={{ fontSize: '15px' }}>Cuestionario</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Evaluación</TableCell>
+              <TableCell sx={{ fontSize: '15px' }}>Tratamientos</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Historial</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Editar</TableCell>
               <TableCell sx={{ fontSize: '15px' }}>Eliminar</TableCell>
@@ -179,6 +180,18 @@ const PatientList = () => {
                     }
                   >
                     Fisica
+                  </Button>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() =>
+                      navigate(`/ui/create-treatment/${patient.id}`, { state: { patient: patient } })
+                    }
+                  >
+                    Tratamiento
                   </Button>
                 </TableCell>
                 <TableCell>
