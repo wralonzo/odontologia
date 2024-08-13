@@ -28,8 +28,6 @@ const CreationTreatment = () => {
         if (response.ok) {
           const data = await response.json();
           setTreatmentsList(data.records);
-          console.log(data.records);
-
         } else {
           alert('Error al obtener la lista de tratamientos.');
         }
@@ -80,8 +78,8 @@ const CreationTreatment = () => {
         label="Tratamiento"
       >
         {treatmentsList.map((treatmentOption) => (
-          <MenuItem key={treatmentOption.id} value={treatmentOption.treatment}>
-            {treatmentOption.treatment}
+          <MenuItem key={treatmentOption.id} value={treatmentOption.plan_details}>
+            {treatmentOption.plan_details}
           </MenuItem>
         ))}
       </Select>
