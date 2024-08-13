@@ -6,7 +6,6 @@ const sequelize = MedicalImage.sequelize;
 
 export const registerMedicalImage = async (req, res, next) => {
   const transaction = await sequelize.transaction();
-
   const form = formidable({
     keepExtensions: true,
     multiples: false
@@ -15,29 +14,23 @@ export const registerMedicalImage = async (req, res, next) => {
     if (err) {
       return res.status(400).json({ message: 'Error parsing the form data.' });
     }
-    console.log('Fields:', fields);
-    console.log('Files:', files);
     try {
       const { description, patient_id } = fields;
-      const imageFile = files.image_base_64;
-      if (!imageFile) {
-        return res.status(400).json({ message: 'No file uploaded.' });
+      const imageFile = files.image_base_64[0]; 
+      if (!imageFile || !imageFile.filepath) {
+        return res.status(400).json({ message: 'No file uploaded or file path is missing.' });
       }
-      let imageBuffer;
-      if (imageFile.filepath) {
-        imageBuffer = await fs.readFile(imageFile.filepath);
-      } else {
-        imageBuffer = imageFile;
-      }
+      const imageBuffer = await fs.readFile(imageFile.filepath);
       await sequelize.query(
-        'CALL procedure_to_register_medical_image(:image_base_64, :description, :patient_id)',
+        'CALL procedure_to_register_medical_image(:image_base_64, :description, :patient_id)', 
         {
           replacements: {
             image_base_64: imageBuffer,
             description,
             patient_id
           },
-          transaction: transaction
+          transaction: transaction,
+          type: sequelize.QueryTypes.RAW 
         }
       );
       await transaction.commit();
