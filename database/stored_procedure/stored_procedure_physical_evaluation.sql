@@ -55,39 +55,3 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
-
-DELIMITER //
-CREATE PROCEDURE procedure_to_delete_logically_physical_evaluation(
-    IN p_id INT
-)
-BEGIN
-    DECLARE physical_evaluation_exists INT;
-    DECLARE physical_evaluation_status BOOLEAN;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error processing physical evaluation logical deletion.';
-    END;
-    SELECT COUNT(*)
-    INTO physical_evaluation_exists
-    FROM physical_evaluation
-    WHERE id = p_id;
-    IF physical_evaluation_exists = 0 THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Physical evaluation item does not exist.';
-    ELSE
-        SELECT status
-        INTO physical_evaluation_status
-        FROM physical_evaluation
-        WHERE id = p_id;
-        IF physical_evaluation_status = 0 THEN
-            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Physical evaluation item has already been logically deleted.';
-        ELSE
-            START TRANSACTION;
-                UPDATE physical_evaluation
-                SET status = false
-                WHERE id = p_id;
-            COMMIT;
-        END IF;
-    END IF;
-END //
-DELIMITER ;
