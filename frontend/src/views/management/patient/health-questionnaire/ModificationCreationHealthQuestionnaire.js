@@ -25,7 +25,6 @@ const ModificationCreationHealthQuestionnaire = () => {
 
   const handleSubmit = async () => {
     const questionnaireData = {
-      patientId,
       hypertension,
       hypertension_control: hypertensionControlled,
       diabetes,
@@ -38,6 +37,7 @@ const ModificationCreationHealthQuestionnaire = () => {
       pregnancy_months: isFemale ? pregnant : null,
       recent_meal: eatenLastSixHours,
       recent_symptoms: covidSymptoms,
+      patient_id: patientId
     };
 
     try {

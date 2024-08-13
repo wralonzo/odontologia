@@ -20,7 +20,7 @@ export const registerHealthQuestionnaire = async (req, res, next) => {
       recent_symptoms,
       patient_id
     } = req.body;
-    
+
     await sequelize.query('CALL procedure_to_register_health_questionnaire(:hypertension, :hypertension_control, :diabetes, :diabetes_control, :hospitalization, :medicine_allergy, :bleeding, :serious_illnesses, :pregnancy, :pregnancy_months, :recent_meal, :recent_symptoms, :patient_id)', {
       replacements: {
         hypertension,
@@ -39,7 +39,7 @@ export const registerHealthQuestionnaire = async (req, res, next) => {
       },
       transaction: transaction
     });
-    
+
     await transaction.commit();
     res.json({ message: 'Health Questionnaire registered successfully.' });
   } catch (error) {
@@ -74,7 +74,7 @@ export const updateHealthQuestionnaire = async (req, res, next) => {
       await transaction.rollback();
       return res.status(400).json({ message: 'Health Questionnaire record does not exist.' });
     }
-    
+
     await sequelize.query('CALL procedure_to_update_health_questionnaire(:id, :hypertension, :hypertension_control, :diabetes, :diabetes_control, :hospitalization, :medicine_allergy, :bleeding, :serious_illnesses, :pregnancy, :pregnancy_months, :recent_meal, :recent_symptoms, :patient_id)', {
       replacements: {
         id,
@@ -94,7 +94,7 @@ export const updateHealthQuestionnaire = async (req, res, next) => {
       },
       transaction: transaction
     });
-    
+
     await transaction.commit();
     res.json({ message: 'Health Questionnaire updated successfully.' });
   } catch (error) {
@@ -118,12 +118,12 @@ export const deleteLogicallyHealthQuestionnaire = async (req, res, next) => {
       await transaction.rollback();
       return res.status(400).json({ message: 'Health Questionnaire record has already been logically deleted.' });
     }
-    
+
     await sequelize.query('CALL procedure_to_delete_logically_health_questionnaire(:id)', {
       replacements: { id: id },
       transaction: transaction
     });
-    
+
     await transaction.commit();
     res.status(200).json({ message: 'Health Questionnaire record logically deleted successfully.' });
   } catch (error) {
