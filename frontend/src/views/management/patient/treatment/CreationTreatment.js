@@ -69,14 +69,14 @@ const CreationTreatment = () => {
       });
 
       if (response.ok) {
-        alert('Evaluación física guardada exitosamente.');
+        alert('Tratamiento guardado exitosamente.');
         navigate('/patients');
       } else {
-        alert('Error al guardar la evaluación física.');
+        alert('Error al guardar el tratamiento.');
       }
     } catch (error) {
-      console.error('Error al guardar la evaluación física:', error);
-      alert('Error al guardar la evaluación física.');
+      console.error('Error al guardar el tratamiento:', error);
+      alert('Error al guardar el tratamiento.');
     }
   };
 
@@ -117,7 +117,7 @@ const CreationTreatment = () => {
               value={cost}
               onChange={(e) => setCost(e.target.value)}
               InputProps={{
-                readOnly: true, // Make the cost field read-only
+                readOnly: true,
                 inputProps: { min: 0 },
               }}
             />
