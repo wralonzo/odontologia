@@ -1,20 +1,23 @@
 import formidable from 'formidable';
-import fs from 'fs';
+import fs from 'fs/promises';
 import MedicalImage from '../model/MedicalImage.js';
 
 const sequelize = MedicalImage.sequelize;
 
 export const registerMedicalImage = async (req, res, next) => {
   const transaction = await sequelize.transaction();
-  const form = new formidable.IncomingForm();
+  const form = new formidable.Formidable({
+    keepExtensions: true,
+    multiples: false
+  });
   form.parse(req, async (err, fields, files) => {
     if (err) {
       return res.status(400).json({ message: 'Error parsing the form data.' });
     }
     try {
       const { description, patient_id } = fields;
-      const { image_base_64 } = files;
-      const imageBuffer = await fs.promises.readFile(image_base_64.path);
+      const imageFile = files.image_base_64;
+      const imageBuffer = imageFile ? await fs.readFile(imageFile.filepath) : null;
       await sequelize.query('CALL procedure_to_register_medical_image(:image_base_64, :description, :patient_id)', {
         replacements: {
           image_base_64: imageBuffer,
