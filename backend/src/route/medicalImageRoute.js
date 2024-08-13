@@ -5,6 +5,6 @@ import { registerMedicalImage } from '../controller/MedicalImageController.js';
 const router = express.Router();
 
 // ENDPOINT - REGISTER MEDICAL IMAGE
-router.post('/treatment', verifyToken, registerMedicalImage);
+router.post('/medical-image', verifyToken, registerMedicalImage);
 
 export default router; 
