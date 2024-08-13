@@ -2,7 +2,6 @@ import HealthQuestionnaire from '../model/HealthQuestionnaire.js';
 
 const sequelize = HealthQuestionnaire.sequelize;
 
-// Método para registrar un cuestionario de salud
 export const registerHealthQuestionnaire = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
@@ -50,7 +49,6 @@ export const registerHealthQuestionnaire = async (req, res, next) => {
   }
 };
 
-// Método para actualizar un cuestionario de salud
 export const updateHealthQuestionnaire = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
@@ -106,7 +104,6 @@ export const updateHealthQuestionnaire = async (req, res, next) => {
   }
 };
 
-// Método para eliminar lógicamente un cuestionario de salud
 export const deleteLogicallyHealthQuestionnaire = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
@@ -136,7 +133,6 @@ export const deleteLogicallyHealthQuestionnaire = async (req, res, next) => {
   }
 };
 
-// Método para listar los cuestionarios de salud
 export const healthQuestionnaireList = async (req, res, next) => {
   try {
     const { page = 1, limit = 30 } = req.query;
