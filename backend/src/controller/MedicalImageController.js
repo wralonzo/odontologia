@@ -6,7 +6,7 @@ const sequelize = MedicalImage.sequelize;
 
 export const registerMedicalImage = async (req, res, next) => {
   const transaction = await sequelize.transaction();
-  const form = new formidable.Formidable({
+  const form = formidable({
     keepExtensions: true,
     multiples: false
   });
