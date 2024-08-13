@@ -6,6 +6,7 @@ import logger from 'morgan';
 import userRoute from '../route/userRoute.js'
 import patientRoute from '../route/patientRoute.js'
 import healthQuestionnaireRoute from '../route/healthQuestionnaireRoute.js'
+import physicalEvaluationRoute from '../route/physicalEvaluationRoute.js'
 import appointmentScheduleRoute from '../route/appointmentScheduleRoute.js'
 import clinicalHistoryRoute from '../route/clinicalHistoryRoute.js'
 import inventoryRoute from '../route/inventoryRoute.js'
@@ -22,6 +23,7 @@ app.use(logger('dev'));
 app.use('/api', userRoute);
 app.use('/api', patientRoute);
 app.use('/api', healthQuestionnaireRoute);
+app.use('/api', physicalEvaluationRoute);
 app.use('/api', appointmentScheduleRoute);
 app.use('/api', clinicalHistoryRoute);
 app.use('/api', inventoryRoute);
