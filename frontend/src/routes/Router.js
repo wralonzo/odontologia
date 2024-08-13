@@ -2,6 +2,7 @@ import React, { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import Loadable from '../layouts/full/shared/loadable/Loadable';
 import ProtectedRoute from './ProtectedRoute';
+import CreationMedicalImage from '../views/management/patient/medical-image/CrationMedicalImage';
 
 /* ****Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -22,6 +23,7 @@ const ModificationCreationPatient = Loadable(lazy(() => import('../views/managem
 const ModificationCreationHealthQuestionnaire = Loadable(lazy(() => import('../views/management/patient/health-questionnaire/ModificationCreationHealthQuestionnaire')));
 const CreationPhysicalEvaluation = Loadable(lazy(() => import('../views/management/patient/physical-evaluation/CreationPhysicalEvaluation')));
 const CreationTreatment = Loadable(lazy(() => import('../views/management/patient/treatment/CreationTreatment')));
+const CrationMedicalImage = Loadable(lazy(() => import('../views/management/patient/medical-image/CrationMedicalImage')));
 /* ****** */
 
 /* ****Citas y Agenda**** */
@@ -95,6 +97,11 @@ const Router = [
         path: '/ui/create-treatment/:id',
         exact: true,
         element: (<ProtectedRoute> <CreationTreatment /> </ProtectedRoute>)
+      },
+      {
+        path: '/ui/create-medical-image/:id',
+        exact: true,
+        element: (<ProtectedRoute> <CreationMedicalImage /> </ProtectedRoute>)
       },
       {
         path: '/appointments',
