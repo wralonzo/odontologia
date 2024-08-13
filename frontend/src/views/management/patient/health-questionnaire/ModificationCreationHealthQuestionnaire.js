@@ -34,7 +34,7 @@ const ModificationCreationHealthQuestionnaire = () => {
       bleeding: excessiveBleeding,
       serious_illnesses: seriousIllnesses,
       pregnancy: isFemale ? sheIsPregnant : null,
-      pregnancy_months: isFemale ? pregnant : null,
+      pregnancy_months: isFemale ? parseInt(pregnant) : null,
       recent_meal: eatenLastSixHours,
       recent_symptoms: covidSymptoms,
       patient_id: patientId
