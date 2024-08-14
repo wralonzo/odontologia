@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { CircularProgress, Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableHead, TableRow, TableFooter, TablePagination, CircularProgress } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { SERVIDOR } from '../../../api/Servidor';
 
-const ScheduleCalendar = () => {
+const ScheduleList = () => {
   const [schedules, setSchedules] = useState([]);
   const [totalSchedules, setTotalSchedules] = useState(0);
   const [page, setPage] = useState(0);
@@ -60,17 +60,17 @@ const ScheduleCalendar = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell sx={{ fontSize: '15px' }}>Fecha</TableCell>
-          <TableCell sx={{ fontSize: '15px' }}>Nombre del Paciente</TableCell>
-          <TableCell sx={{ fontSize: '15px' }}>Motivo de la Cita</TableCell>
+          <TableCell>Fecha</TableCell>
+          <TableCell>Nombre del Paciente</TableCell>
+          <TableCell>Motivo de la Cita</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {schedules.map((schedule) => (
           <TableRow key={schedule.id}>
-            <TableCell sx={{ fontSize: '15px' }}>{schedule.date}</TableCell>
-            <TableCell sx={{ fontSize: '15px' }}>{schedule.appointment?.patient?.full_name}</TableCell>
-            <TableCell sx={{ fontSize: '15px' }}>{schedule.appointment?.reason}</TableCell>
+            <TableCell>{schedule.date}</TableCell>
+            <TableCell>{schedule.appointment?.patient?.full_name}</TableCell>
+            <TableCell>{schedule.appointment?.reason}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -90,4 +90,4 @@ const ScheduleCalendar = () => {
   );
 };
 
-export default ScheduleCalendar;
+export default ScheduleList;
