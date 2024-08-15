@@ -1,1 +1,1 @@
-export const SERVIDOR = 'http://localhost:8080';
+export const SERVIDOR = 'http://remotogt.com:8080';

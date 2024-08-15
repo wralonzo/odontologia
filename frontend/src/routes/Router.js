@@ -56,17 +56,17 @@ const Router = [
       {
         path: '/users',
         exact: true,
-        element: (<ProtectedRoute> <UserList /> </ProtectedRoute>)
+        element: ( <UserList />)
       },
       {
         path: '/ui/create-user',
         exact: true,
-        element: (<ProtectedRoute> <ModificationCreationUser /> </ProtectedRoute>)
+        element: ( <ModificationCreationUser />)
       },
       {
         path: '/ui/update-user/:id',
         exact: true,
-        element: (<ProtectedRoute> <ModificationCreationUser /> </ProtectedRoute>)
+        element: (<ModificationCreationUser />)
       },
       {
         path: '/patients',
